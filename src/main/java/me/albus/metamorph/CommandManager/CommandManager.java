@@ -1,7 +1,6 @@
 package me.albus.metamorph.CommandManager;
 
-import me.albus.metamorph.CommandManager.commands.Add;
-import me.albus.metamorph.CommandManager.commands.Reload;
+import me.albus.metamorph.CommandManager.commands.*;
 import me.albus.metamorph.config.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -16,6 +15,9 @@ public class CommandManager implements TabExecutor {
     public CommandManager(){
         subcommands.add(new Reload());
         subcommands.add(new Add());
+        subcommands.add(new Clean());
+        subcommands.add(new Remove());
+        subcommands.add(new Set());
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

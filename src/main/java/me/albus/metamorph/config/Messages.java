@@ -18,16 +18,28 @@ public class Messages {
 
         get().addDefault("syntax", "&cWrong syntax: &e%this%");
 
-        get().addDefault("command_error_item_null", "&eThe item in your hand cannot be a &bnull &eitem.");
-        get().addDefault("command_error_item_air", "");
-        get().addDefault("command_error_item_no_model", "");
-        get().addDefault("command_error_item_model_number_invalid", "");
-        get().addDefault("command_error_model_exists", "");
+        get().addDefault("command_error_item_null", "&cYou have no item in your hand.");
+        get().addDefault("command_error_item_air", "&cYou have no item in your hand.");
+        get().addDefault("command_error_item_no_model", "&cThe item in your hand has no model.");
+        get().addDefault("command_error_item_model_number_invalid", "&cThe item in your hand has no model.");
+        get().addDefault("command_error_model_exists", "&cThe item model on the item in your hand doesn't exists in the &bmodels.yml");
 
         get().addDefault("command_add_description", "&eAdds the item in your hand into the &bmodels.yml &eThe item requires a model on it to be added.");
-        get().addDefault("command_add_success", "");
+        get().addDefault("command_add_success", "&aYou added this model into your &bmodels.yml");
+
+        get().addDefault("command_remove_description", "&eRemove the item model on the item in your hand from &bmodels.yml");
+        get().addDefault("command_remove_success", "&aThe model has been removed from &bmodels.yml");
+
+        get().addDefault("command_clean_description", "&eRemove the model from the item in your hand.");
+        get().addDefault("command_clean_success", "&aYou washed away the model from the item in your hand.");
+
+        get().addDefault("command_set_description", "&eSelect the model you would like to set on your item.");
+        get().addDefault("command_set_success", "&aYou set a new item model on your item.");
 
         get().addDefault("permission", "&cYou're missing permission &e%this%");
+
+        get().addDefault("error_missing_item", "&cWe do not have any models for the item in your hand.");
+
     }
 
     @SuppressWarnings("StringConcatenationInsideStringBufferAppend")

@@ -10,25 +10,28 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class Add extends SubCommands {
+public class Remove extends SubCommands {
     @Override
     public String getName() {
-        return "add";
+        return "remove";
     }
+
     @Override
     public String getPermission() {
         return "mm.admin";
     }
+
     @Override
     public String getSyntax() {
-        return "/mm add";
+        return "/mm remove";
     }
+
     @Override
     @SuppressWarnings("ConstantConditions")
     public void perform(Player player, String[] args) {
         if(args.length != 1) {
-           player.sendMessage(Messages.chatMessage("syntax").replace("%this%", getSyntax()));
-           player.sendMessage(Messages.chatMessage("command_add_description"));
+            player.sendMessage(Messages.chatMessage("syntax").replace("%this%", getSyntax()));
+            player.sendMessage(Messages.chatMessage("command_remove_description"));
             return;
         }
 
@@ -36,38 +39,38 @@ public class Add extends SubCommands {
 
         if(item == null) {
             player.sendMessage(Messages.chatMessage("command_error_item_null"));
-            player.sendMessage(Messages.chatMessage("command_add_description"));
+            player.sendMessage(Messages.chatMessage("command_remove_description"));
             return;
         }
 
         if(item.getType() == Material.AIR) {
             player.sendMessage(Messages.chatMessage("command_error_item_air"));
-            player.sendMessage(Messages.chatMessage("command_add_description"));
+            player.sendMessage(Messages.chatMessage("command_remove_description"));
             return;
         }
 
         if(item.getItemMeta() == null || item.getItemMeta().hasCustomModelData()) {
             player.sendMessage(Messages.chatMessage("command_error_item_no_model"));
-            player.sendMessage(Messages.chatMessage("command_add_description"));
+            player.sendMessage(Messages.chatMessage("command_remove_description"));
             return;
         }
 
         if(item.getItemMeta().getCustomModelData() <= 0) {
             player.sendMessage(Messages.chatMessage("command_error_item_model_number_invalid"));
-            player.sendMessage(Messages.chatMessage("command_add_description"));
+            player.sendMessage(Messages.chatMessage("command_remove_description"));
             return;
         }
 
         ModelManager modelManager = MetaMorph.getInstance().getModelManager();
 
-        if(modelManager.ModelExists(item)) {
+        if(!modelManager.ModelExists(item)) {
             player.sendMessage(Messages.chatMessage("command_error_model_exists"));
-            player.sendMessage(Messages.chatMessage("command_add_description"));
+            player.sendMessage(Messages.chatMessage("command_remove_description"));
             return;
         }
 
-        modelManager.add(item);
-        player.sendMessage(Messages.chatMessage("command_add_success"));
+        modelManager.remove(item);
+        player.sendMessage(Messages.chatMessage("command_remove_success"));
     }
 
     @Override
