@@ -1,0 +1,7 @@
+name: MetaMorph
+version: '${project.version}'
+main: me.albus.metamorph.MetaMorph
+api-version: '1.16'
+commands:
+  metamorph:
+    aliases: [memo, mem]

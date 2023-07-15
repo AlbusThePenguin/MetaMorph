@@ -1,0 +1,3 @@
+#Messages support both hex and bukkit colors.
+#Hex colors would be added using &#FFFFFF for hex, and normal &f for bukkit colors.
+#Don't change or remove words that have '%' (example %this%) around it. Then you break the variable, and will cause errors. You cannot change identifiers.

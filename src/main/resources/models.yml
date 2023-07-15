@@ -1,0 +1,10 @@
+#Each number and item has its personal permission. If you don't want to deal with that you can give them permission mm.BOW.* to give them access to all bows.
+#So to use the BOW with model data 1, the permission would be 'mm.bow.1'. The numbers do need to match the model number id in your resource pack.
+models:
+  #All the bows with model data numbers listed below available in the GUI. You can add them manually or in-game.
+  BOWS:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5

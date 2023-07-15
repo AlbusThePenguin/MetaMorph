@@ -1,0 +1,13 @@
+GUI:
+  pagination:
+    next_button:
+      #Set the display name for the next page button in the menu
+      display: '&#CC9911&lNext'
+      #Set the material for the next page button in the menu!
+      material: 'LEVER'
+    prev_button:
+      display: '&#CC9911&lPrevious'
+      material: 'LEVER'
+    clean:
+      display: '&#FF91AF&lClean Item'
+      material: 'SPONGE'
