@@ -13,3 +13,5 @@ Commands: aliases: [memo, mem]
 /metamorph clean - remove the model from the item in your hand. (mm.player)
 
 If you need help or want to suggest features, feel free to join the discord server here. If you use this plugin, please rate it! :)
+
+This project is available for download and usage at no cost and permissively licensed so it can remain free forever.
