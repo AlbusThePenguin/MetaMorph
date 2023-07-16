@@ -18,3 +18,5 @@ To give the players access to any/or multiple items you give them the permission
 If you need help or want to suggest features, feel free to join the discord server here. If you use this plugin, please rate it! :)
 
 This project is available for download and usage at no cost and permissively licensed so it can remain free forever.
+
+https://www.spigotmc.org/resources/metamorph-give-the-players-an-interactive-and-fun-way-of-changing-item-models-in-game.109270/add-version
