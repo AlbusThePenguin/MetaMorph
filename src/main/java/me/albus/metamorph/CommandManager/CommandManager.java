@@ -23,7 +23,6 @@ public class CommandManager implements TabExecutor {
         subcommands.add(new Add());
         subcommands.add(new Clean());
         subcommands.add(new Remove());
-        subcommands.add(new Set());
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
