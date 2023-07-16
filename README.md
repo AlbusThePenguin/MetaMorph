@@ -12,6 +12,9 @@ Commands: aliases: [memo, mem]
 /metamorph reload <messages | models | config> - gives you access to reload one of them at a time. (mm.admin)
 /metamorph clean - remove the model from the item in your hand. (mm.player)
 
+Item Permission(s).
+To give the players access to any/or multiple items you give them the permission mm.<item name>.<id> You can also do mm.<item name>.*
+
 If you need help or want to suggest features, feel free to join the discord server here. If you use this plugin, please rate it! :)
 
 This project is available for download and usage at no cost and permissively licensed so it can remain free forever.
