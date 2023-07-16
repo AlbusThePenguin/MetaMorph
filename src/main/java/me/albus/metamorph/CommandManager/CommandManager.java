@@ -1,3 +1,6 @@
+ /* This file is part of MetaMorph by AlbusThePenguin (Albus)
+  * MetaMorph is open-source software licensed under the MIT License.
+  * For details, see the LICENSE file or visit https://github.com/pricelessdev/MetaMorph/blob/master/MIT%20License*/
 package me.albus.metamorph.CommandManager;
 
 import me.albus.metamorph.CommandManager.commands.*;
@@ -6,7 +9,6 @@ import me.albus.metamorph.MenuManager.Menus.ModelMenu;
 import me.albus.metamorph.MetaMorph;
 import me.albus.metamorph.ModelManager.ModelManager;
 import me.albus.metamorph.config.Messages;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;

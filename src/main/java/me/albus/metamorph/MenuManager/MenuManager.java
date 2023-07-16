@@ -1,3 +1,6 @@
+ /* This file is part of MetaMorph by AlbusThePenguin (Albus)
+  * MetaMorph is open-source software licensed under the MIT License.
+  * For details, see the LICENSE file or visit https://github.com/pricelessdev/MetaMorph/blob/master/MIT%20License*/
 package me.albus.metamorph.MenuManager;
 
 import me.albus.metamorph.MetaMorph;
