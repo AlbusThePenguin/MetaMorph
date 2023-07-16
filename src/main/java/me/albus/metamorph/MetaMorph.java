@@ -1,11 +1,13 @@
 package me.albus.metamorph;
 
 import me.albus.metamorph.CommandManager.CommandManager;
+import me.albus.metamorph.MenuManager.MenuListener;
 import me.albus.metamorph.MenuManager.MenuUtilities;
 import me.albus.metamorph.ModelManager.ModelManager;
 import me.albus.metamorph.config.Config;
 import me.albus.metamorph.config.Messages;
 import me.albus.metamorph.config.Models;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
@@ -50,7 +52,9 @@ public final class MetaMorph extends JavaPlugin {
 
         CommandManager commandManager = new CommandManager();
         Objects.requireNonNull(getCommand("metamorph")).setExecutor(commandManager);
+        getServer().getPluginManager().registerEvents(new MenuListener(), this);
 
+        new Metrics(this, 19112);
     }
 
     public File getMessage() {

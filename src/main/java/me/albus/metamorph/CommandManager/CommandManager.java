@@ -1,11 +1,17 @@
 package me.albus.metamorph.CommandManager;
 
 import me.albus.metamorph.CommandManager.commands.*;
+import me.albus.metamorph.MenuManager.MenuUtilities;
+import me.albus.metamorph.MenuManager.Menus.ModelMenu;
+import me.albus.metamorph.MetaMorph;
+import me.albus.metamorph.ModelManager.ModelManager;
 import me.albus.metamorph.config.Messages;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +40,32 @@ public class CommandManager implements TabExecutor {
                     }
                 }
             } else {
-                //Todo: open menu with all available skins if any.
+                MetaMorph metaMorph = MetaMorph.getInstance();
+
+                ModelManager modelManager = metaMorph.getModelManager();
+
+                ItemStack item = player.getInventory().getItemInMainHand();
+                String name = item.getType().name();
+
+                boolean hasPermission = false;
+
+                if (modelManager.defined(name)) {
+                    String basePermission = "mm." + name.toLowerCase() + ".";
+                    hasPermission = player.getEffectivePermissions().stream()
+                            .anyMatch(pai -> pai.getPermission().startsWith(basePermission));
+                } else {
+                    player.sendMessage(Messages.chatMessage("error_missing_item"));
+                    return false;
+                }
+
+                if (!hasPermission) {
+                    player.sendMessage(Messages.chatMessage("error_missing_item"));
+                    return false;
+                } else {
+                    MenuUtilities menuUtilities = metaMorph.menuUtilities(player);
+                    menuUtilities.setItem(player.getItemInHand());
+                    new ModelMenu(metaMorph.menuUtilities(player)).open();
+                }
             }
         }
         return true;

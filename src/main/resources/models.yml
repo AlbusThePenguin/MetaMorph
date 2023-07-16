@@ -2,7 +2,7 @@
 #So to use the BOW with model data 1, the permission would be 'mm.bow.1'. The numbers do need to match the model number id in your resource pack.
 models:
   #All the bows with model data numbers listed below available in the GUI. You can add them manually or in-game.
-  BOWS:
+  BOW:
     - 1
     - 2
     - 3

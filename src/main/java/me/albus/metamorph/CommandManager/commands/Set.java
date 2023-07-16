@@ -14,17 +14,17 @@ import java.util.List;
 public class Set extends SubCommands {
     @Override
     public String getName() {
-        return null;
+        return "set";
     }
 
     @Override
     public String getPermission() {
-        return null;
+        return "mm.player";
     }
 
     @Override
     public String getSyntax() {
-        return null;
+        return "/mm set";
     }
 
     @Override
@@ -46,15 +46,17 @@ public class Set extends SubCommands {
         boolean hasPermission = false;
 
         if (modelManager.defined(name)) {
-            String basePermission = "mm." + name + ".";
+            String basePermission = "mm." + name.toLowerCase() + ".";
             hasPermission = player.getEffectivePermissions().stream()
                     .anyMatch(pai -> pai.getPermission().startsWith(basePermission));
         } else {
             player.sendMessage(Messages.chatMessage("error_missing_item"));
+            return;
         }
 
         if (!hasPermission) {
             player.sendMessage(Messages.chatMessage("error_missing_item"));
+            return;
         } else {
             MenuUtilities menuUtilities = metaMorph.menuUtilities(player);
             menuUtilities.setItem(player.getItemInHand());

@@ -30,7 +30,7 @@ public class Add extends SubCommands {
            player.sendMessage(Messages.chatMessage("syntax").replace("%this%", getSyntax()));
            player.sendMessage(Messages.chatMessage("command_add_description"));
             return;
-        }
+        } //Todo: check why it returns that id doesn't exists. because it shouldn't when we add it? wut.. also fix reload commands...
 
         ItemStack item = player.getInventory().getItemInMainHand();
 
@@ -46,7 +46,7 @@ public class Add extends SubCommands {
             return;
         }
 
-        if(item.getItemMeta() == null || item.getItemMeta().hasCustomModelData()) {
+        if(item.getItemMeta() == null || !item.getItemMeta().hasCustomModelData()) {
             player.sendMessage(Messages.chatMessage("command_error_item_no_model"));
             player.sendMessage(Messages.chatMessage("command_add_description"));
             return;
@@ -60,7 +60,7 @@ public class Add extends SubCommands {
 
         ModelManager modelManager = MetaMorph.getInstance().getModelManager();
 
-        if(modelManager.ModelExists(item)) {
+        if(modelManager.ModelExists(item) && modelManager.IDExists(item)) {
             player.sendMessage(Messages.chatMessage("command_error_model_exists"));
             player.sendMessage(Messages.chatMessage("command_add_description"));
             return;

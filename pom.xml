@@ -6,7 +6,7 @@
 
     <groupId>me.albus</groupId>
     <artifactId>MetaMorph</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.4</version>
     <packaging>jar</packaging>
 
     <name>MetaMorph</name>
@@ -43,6 +43,19 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>me.albus.MetaMorph</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
+            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -69,6 +82,12 @@
             <artifactId>spigot-api</artifactId>
             <version>1.16.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>3.0.2</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

@@ -5,6 +5,7 @@ import me.albus.metamorph.MenuManager.PaginatedMenu;
 import me.albus.metamorph.MetaMorph;
 import me.albus.metamorph.ModelManager.ModelManager;
 import me.albus.metamorph.config.Messages;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -19,34 +20,99 @@ import java.util.List;
 public class ModelMenu extends PaginatedMenu {
 
     private MetaMorph metaMorph;
+
+    private ModelManager modelManager;
     public ModelMenu(MenuUtilities menuUtilities) {
         super(menuUtilities);
 
         metaMorph = MetaMorph.getInstance();
+
+        modelManager = metaMorph.getModelManager();
     }
 
     @Override
     public String getMenuName() {
-        return null;
+        String name = metaMorph.config().get().getString("GUI.model_menu.title");
+        if(name == null || name.isEmpty()) {
+            name = "&b&lSelect Model";
+        }
+        return Messages.translateColorCodes(name);
     }
 
     @Override
     public int getSlots() {
-        return 0;
+        int slots = metaMorph.config().get().getInt("GUI.model_menu.size");
+        if(slots == 0) {
+            slots = 54;
+        }
+        return 54;
     }
 
     @Override
     public void handleMenu(InventoryClickEvent e) {
+        ItemStack clicked = e.getCurrentItem();
 
+        Player player = (Player) e.getWhoClicked();
+
+        if(clicked == null || clicked.getType() == Material.AIR || !clicked.hasItemMeta()) {
+            return;
+        }
+
+        ItemMeta meta = clicked.getItemMeta();
+        if(meta == null) {
+            return;
+        }
+
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        String click = container.get(new NamespacedKey(metaMorph.getInstance(), "metamorph"), PersistentDataType.STRING);
+
+        if(click == null || click.isEmpty()) {
+            return;
+        }
+
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        List<Integer> ids = modelManager.get(hand);
+        if(ids == null || ids.isEmpty()) {
+            return;
+        }
+
+        if(modelManager.isNumeric(click)) {
+            modelManager.setModel(hand, Integer.valueOf(click));
+            player.sendMessage(Messages.chatMessage("gui_button_model_click"));
+            player.closeInventory();
+        } else {
+            switch (click) {
+                case "next":
+                    if (!((index + 1) >= ids.size())){
+                        page = page + 1;
+                        super.open();
+                    }
+                    break;
+                case "previous":
+                    if(page != 0){
+                        page = page - 1;
+                        super.open();
+                    }
+                    break;
+                case "clean": //todo: more than model is copied over which is an issue. maybe copy their item and add the model.
+                    ItemMeta handMeta = hand.getItemMeta();
+                    handMeta.clone();
+                    handMeta.setCustomModelData(0);
+                    hand.setItemMeta(handMeta);
+                    player.sendMessage(Messages.chatMessage("gui_button_clean_click"));
+                    player.closeInventory();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     @Override
     public void setMenuItems() {
         addMenuBorder();
-        ItemStack item = menuUtilities.getItem();
-
-        ModelManager modelManager = metaMorph.getModelManager();
-
+        ItemStack player_item = menuUtilities.getItem();
+        ItemStack item = player_item.clone();
         List<Integer> ids = modelManager.get(item);
         if(ids != null && !ids.isEmpty()) {
             for(int i = 0; i < getMaxItemsPerPage(); i++) {

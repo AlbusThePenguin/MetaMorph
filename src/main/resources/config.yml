@@ -1,5 +1,12 @@
 GUI:
+  model_menu:
+    title: '&b&lSelect Model'
+    size: 54
+
   pagination:
+    filler_item:
+      display: ' '
+      material: 'GRAY_STAINED_GLASS_PANE'
     next_button:
       #Set the display name for the next page button in the menu
       display: '&#CC9911&lNext'

@@ -36,17 +36,14 @@ public class Reload extends SubCommands {
         if (arg != null && !arg.isEmpty()) {
             switch (arg) {
                 case "config":
-                    metaMorph.config().save();
                     metaMorph.config().reload();
                     reloaded = true;
                     break;
                 case "messages":
-                    Messages.save();
                     Messages.reload();
                     reloaded = true;
                     break;
                 case "models":
-                    metaMorph.getModels().save();
                     metaMorph.getModels().reload();
                     reloaded = true;
                     break;
@@ -61,7 +58,7 @@ public class Reload extends SubCommands {
 
     @Override
     public List<String> getSubcommandArguments(Player player, String[] args) {
-        if (args.length == 1) {
+        if (args.length > 0) {
             List<String> suggestions = new ArrayList<>();
             suggestions.add("config");
             suggestions.add("messages");

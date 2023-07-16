@@ -35,6 +35,7 @@ public class Models {
 
     public void save() {
         try {
+            Bukkit.getLogger().warning(file.getAbsolutePath().toString() + " save..");
             config.save(file);
         } catch(IOException e) {
             Bukkit.getLogger().severe("Could not save models.yml because " + e.getMessage());

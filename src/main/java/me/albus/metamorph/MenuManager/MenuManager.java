@@ -1,7 +1,9 @@
 package me.albus.metamorph.MenuManager;
 
+import me.albus.metamorph.MetaMorph;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -13,9 +15,22 @@ import java.util.Arrays;
 public abstract class MenuManager implements InventoryHolder {
     protected MenuUtilities menuUtilities;
     protected Inventory inventory;
-    protected ItemStack FILLER_GLASS = makeItem(Material.YELLOW_STAINED_GLASS_PANE, " ");
+    protected ItemStack FILLER_GLASS;
     public MenuManager(MenuUtilities menuUtilities) {
         this.menuUtilities = menuUtilities;
+        YamlConfiguration config = MetaMorph.getInstance().config().get();
+        String name = config.getString("GUI.pagination.filler_item.display");
+        if(name == null) {
+            name = " ";
+        }
+
+        String mat = config.getString("GUI.pagination.filler_item.material");
+        if(mat == null || mat.isEmpty()) {
+            mat = "GRAY_STAINED_GLASS_PANE";
+        }
+
+        Material material = Material.valueOf(mat);
+        FILLER_GLASS = makeItem(material, name);
     }
     public abstract String getMenuName();
     public abstract int getSlots();

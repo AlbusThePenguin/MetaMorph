@@ -48,7 +48,7 @@ public abstract class PaginatedMenu extends MenuManager {
             prev_display = "&#CC9911&lPrevious";
         }
 
-        String clean_display = config.getString("GUI.pagination.clean.material");
+        String clean_display = config.getString("GUI.pagination.clean.display");
         if(clean_display == null || clean_display.isEmpty()) {
             clean_display = "&#FF91AF&lClean Item";
         }

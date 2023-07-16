@@ -36,6 +36,9 @@ public class Messages {
         get().addDefault("command_set_description", "&eSelect the model you would like to set on your item.");
         get().addDefault("command_set_success", "&aYou set a new item model on your item.");
 
+        get().addDefault("gui_button_clean_click", "&eWooosh! washed away the model");
+        get().addDefault("gui_button_model_click", "&aSet a new model to your item!");
+
         get().addDefault("permission", "&cYou're missing permission &e%this%");
 
         get().addDefault("error_missing_item", "&cWe do not have any models for the item in your hand.");
@@ -98,5 +101,9 @@ public class Messages {
 
     public static String chatMessage(final String path) {
         return translateColorCodes(Objects.requireNonNull(get().getString("plugin_prefix"))) + translateColorCodes("&r ") + translateColorCodes(Objects.requireNonNull(get().getString(path)));
+    }
+
+    public static String message(final String path) {
+        return translateColorCodes(Objects.requireNonNull(get().getString(path)));
     }
 }
