@@ -33,7 +33,7 @@ public class Add extends SubCommands {
            player.sendMessage(Messages.chatMessage("syntax").replace("%this%", getSyntax()));
            player.sendMessage(Messages.chatMessage("command_add_description"));
             return;
-        } //Todo: check why it returns that id doesn't exists. because it shouldn't when we add it? wut.. also fix reload commands...
+        }
 
         ItemStack item = player.getInventory().getItemInMainHand();
 

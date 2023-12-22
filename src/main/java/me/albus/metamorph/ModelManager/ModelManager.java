@@ -13,10 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModelManager {
-    private final MetaMorph metaMorph;
     private final Models models;
     public ModelManager() {
-        metaMorph = MetaMorph.getInstance();
+        MetaMorph metaMorph = MetaMorph.getInstance();
         models = metaMorph.getModels();
     }
 
@@ -39,6 +38,7 @@ public class ModelManager {
         List<String> list = models.getConfig().getStringList(path);
         return !list.isEmpty();
     }
+
     @SuppressWarnings("ConstantConditions")
     public void setModel(ItemStack item, int id) {
         ItemMeta meta = item.getItemMeta();

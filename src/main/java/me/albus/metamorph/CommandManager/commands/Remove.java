@@ -52,7 +52,7 @@ public class Remove extends SubCommands {
             return;
         }
 
-        if(item.getItemMeta() == null || item.getItemMeta().hasCustomModelData()) {
+        if(item.getItemMeta() == null || !item.getItemMeta().hasCustomModelData()) {
             player.sendMessage(Messages.chatMessage("command_error_item_no_model"));
             player.sendMessage(Messages.chatMessage("command_remove_description"));
             return;

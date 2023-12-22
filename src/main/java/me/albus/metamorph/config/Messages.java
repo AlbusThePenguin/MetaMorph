@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+@SuppressWarnings("all")
 public class Messages {
     public static void addDefaults() {
         get().addDefault("plugin_prefix", "&8[&eMetaMorph&8]");
@@ -39,13 +40,16 @@ public class Messages {
         get().addDefault("command_set_description", "&eSelect the model you would like to set on your item.");
         get().addDefault("command_set_success", "&aYou set a new item model on your item.");
 
+        get().addDefault("command_check_description", "&eChecks the item in your hand for the model ID.");
+        get().addDefault("command_check_error_invalid", "&cThe item in your hand has no model.");
+        get().addDefault("command_check_success", "&aThe &e%item%&a has a model ID of &e%this%");
+
         get().addDefault("gui_button_clean_click", "&eWooosh! washed away the model");
         get().addDefault("gui_button_model_click", "&aSet a new model to your item!");
 
         get().addDefault("permission", "&cYou're missing permission &e%this%");
 
         get().addDefault("error_missing_item", "&cWe do not have any models for the item in your hand.");
-
     }
 
     @SuppressWarnings("StringConcatenationInsideStringBufferAppend")

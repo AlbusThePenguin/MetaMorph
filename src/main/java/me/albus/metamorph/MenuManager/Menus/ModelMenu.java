@@ -116,6 +116,7 @@ public class ModelMenu extends PaginatedMenu {
         addMenuBorder();
         ItemStack player_item = menuUtilities.getItem();
         ItemStack item = player_item.clone();
+        Player player = menuUtilities.getOwner();
         List<Integer> ids = modelManager.get(item);
         if(ids != null && !ids.isEmpty()) {
             for(int i = 0; i < getMaxItemsPerPage(); i++) {
@@ -125,17 +126,26 @@ public class ModelMenu extends PaginatedMenu {
                 }
 
                 int id = ids.get(index);
-                Player player = menuUtilities.getOwner();
 
                 if(player.hasPermission("mm." + item.getType().name() + "." + id)) {
                     ItemStack dupe = new ItemStack(Material.valueOf(item.getType().name()));
-                    ItemMeta meta = dupe.getItemMeta();
-                    meta.setCustomModelData(id);
-                    meta.setDisplayName(Messages.translateColorCodes("&bSelect Skin"));
-                    PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
+                    ItemMeta dMeta = dupe.getItemMeta();
+                    dMeta.setCustomModelData(id);
+
+                    String display = metaMorph.config().get().getString("GUI.items.display");
+                    if(display == null || display.isEmpty()) {
+                        display = "&#00FF00&lSelect This Model";
+                    }
+
+                    if(player.hasPermission("mm.admin")) {
+                        display += display + "&e&l(&6&l" + id + "&e&l)";
+                    }
+
+                    dMeta.setDisplayName(Messages.translateColorCodes(display));
+                    PersistentDataContainer dataContainer = dMeta.getPersistentDataContainer();
                     dataContainer.set(new NamespacedKey(metaMorph, "metamorph"), PersistentDataType.STRING, String.valueOf(id));
-                    item.setItemMeta(meta);
-                    inventory.addItem(item);
+                    dupe.setItemMeta(dMeta);
+                    inventory.addItem(dupe);
                 }
             }
         }

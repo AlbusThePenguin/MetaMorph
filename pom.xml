@@ -6,7 +6,7 @@
 
     <groupId>me.albus</groupId>
     <artifactId>MetaMorph</artifactId>
-    <version>1.0.4</version>
+    <version>1.7</version>
     <packaging>jar</packaging>
 
     <name>MetaMorph</name>
@@ -80,7 +80,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.2-R0.1-SNAPSHOT</version>
+            <version>1.20.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

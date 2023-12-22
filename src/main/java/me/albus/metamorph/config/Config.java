@@ -29,6 +29,7 @@ public class Config {
         this.config = YamlConfiguration.loadConfiguration(file);
     }
 
+    @SuppressWarnings("unused")
     public void save() {
         try {
             config.save(file);

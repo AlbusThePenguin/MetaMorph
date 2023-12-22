@@ -3,6 +3,10 @@ GUI:
     title: '&b&lSelect Model'
     size: 54
 
+  #The items shown in the items.
+  items:
+    display: '&#00FF00&lSelect This Model'
+
   pagination:
     filler_item:
       display: ' '

@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@SuppressWarnings("all")
 public class CommandManager implements TabExecutor {
     private final ArrayList<SubCommands> subcommands = new ArrayList<>();
     public CommandManager(){
@@ -25,6 +25,7 @@ public class CommandManager implements TabExecutor {
         subcommands.add(new Add());
         subcommands.add(new Clean());
         subcommands.add(new Remove());
+        subcommands.add(new check());
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -33,7 +34,7 @@ public class CommandManager implements TabExecutor {
             if (args.length > 0) {
                 for (int i = 0; i < getSubcommands().size(); i++) {
                     if (args[0].equalsIgnoreCase(getSubcommands().get(i).getName())) {
-                        if(player.hasPermission(getSubcommands().get(i).getPermission())) {
+                        if (player.hasPermission(getSubcommands().get(i).getPermission()) || player.hasPermission("mm.admin") || player.isOp()) {
                             getSubcommands().get(i).perform(player, args);
                         } else {
                             player.sendMessage(Messages.chatMessage("permission").replace("%this%", getSubcommands().get(i).getPermission()));
@@ -42,17 +43,16 @@ public class CommandManager implements TabExecutor {
                 }
             } else {
                 MetaMorph metaMorph = MetaMorph.getInstance();
-
                 ModelManager modelManager = metaMorph.getModelManager();
-
                 ItemStack item = player.getInventory().getItemInMainHand();
                 String name = item.getType().name();
 
                 boolean hasPermission = false;
+                boolean isOpOrAdmin = player.isOp() || player.hasPermission("mm.admin");
 
                 if (modelManager.defined(name)) {
                     String basePermission = "mm." + name.toLowerCase() + ".";
-                    hasPermission = player.getEffectivePermissions().stream()
+                    hasPermission = isOpOrAdmin || player.getEffectivePermissions().stream()
                             .anyMatch(pai -> pai.getPermission().startsWith(basePermission));
                 } else {
                     player.sendMessage(Messages.chatMessage("error_missing_item"));
