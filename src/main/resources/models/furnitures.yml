@@ -1,0 +1,109 @@
+# Configuration example for an in-game item called "Goliath's Throne."
+# This configuration demonstrates how to set up an item with a custom material,
+# model ID, display name, lore, and an optional price for in-game purchases.
+throne:
+  # Material defines the base item type. This example uses 'PAPER' as the material.
+  material: PAPER
+
+  # The item category, will be sorted in
+  category: furnitures
+
+  permission: "mm.furnitures.throne"
+
+  # The custom model ID for the item. This allows for unique appearances
+  # when using a resource pack with custom models.
+  model-id: 25
+
+  # Display name is the name of the item shown in-game, formatted with color codes.
+  # In this case, it's styled to represent "Goliath's Throne."
+  display-name: "&8Goliath's Throne"
+
+  # Lore is a list of text lines that provide additional context or information
+  # about the item. Color codes are used for formatting.
+  lore:
+    - '&7A mighty throne worthy of a giant.'          # lore for the item.
+    - '&7Price: &e$250'                               # Item price.
+    - ''                                              # Blank line for spacing.
+    - '&7Click to claim the &8Goliath''s Throne&7.'   # Instructions for purchasing the item.
+
+  # Price represents the in-game currency cost of the item. This value is optional
+  # and only applicable if the server has an economy plugin integrated.
+  price: 250
+
+golden-chair:
+  material: PAPER
+  category: furnitures
+  permission: "mm.furnitures.golden_chair"
+  model-id: 101
+  display-name: "&6Golden Chair"
+  lore:
+    - '&7A luxurious chair fit for royalty.'
+    - '&7Price: &e$200'
+    - ''
+    - '&7Click to purchase the &6Golden Chair&7.'
+  price: 200
+
+crystal-table:
+  material: PAPER
+  category: furnitures
+  permission: "mm.furnitures.crystal_table"
+  model-id: 102
+  display-name: "&bCrystal Table"
+  lore:
+    - '&7A table made of pure enchanted crystal.'
+    - '&7Cost: &e$350'
+    - ''
+    - '&7Click to buy the &bCrystal Table&7.'
+  price: 350
+
+enchanted-sofa:
+  material: PAPER
+  category: furnitures
+  permission: "mm.furnitures.enchanted_sofa"
+  model-id: 103
+  display-name: "&dEnchanted Sofa"
+  lore:
+    - '&7Rest in style with the magical &dEnchanted Sofa&7.'
+    - '&7Price: &e$400'
+    - ''
+    - '&7Click to acquire the &dEnchanted Sofa&7.'
+  price: 400
+
+grand-piano:
+  material: PAPER
+  category: furnitures
+  permission: "mm.furnitures.grand_piano"
+  model-id: 104
+  display-name: "&8Grand Piano"
+  lore:
+    - '&7A masterpiece of musical craftsmanship.'
+    - '&7Price: &e$1,000'
+    - ''
+    - '&7Click to bring the &8Grand Piano &7to your home.'
+  price: 1000
+
+vintage-lamp:
+  material: PAPER
+  category: furnitures
+  permission: "mm.furnitures.vintage_lamp"
+  model-id: 105
+  display-name: "&eVintage Lamp"
+  lore:
+    - '&7A classic lamp to brighten your space.'
+    - '&7Cost: &e$150'
+    - ''
+    - '&7Click to purchase the &eVintage Lamp&7.'
+  price: 150
+
+garden-bench:
+  material: PAPER
+  category: furnitures
+  permission: "mm.furnitures.garden_bench"
+  model-id: 106
+  display-name: "&2Garden Bench"
+  lore:
+    - '&7A cozy bench for your outdoor retreat.'
+    - '&7Price: &e$120'
+    - ''
+    - '&7Click to buy the &2Garden Bench&7.'
+  price: 120

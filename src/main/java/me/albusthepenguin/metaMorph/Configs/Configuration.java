@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Skyline. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.albusthepenguin.skyline.Config;
+package me.albusthepenguin.metaMorph.Configs;
 
-import me.albusthepenguin.skyline.Skyline;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,12 +26,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Configuration {
 
-    private final Skyline skyline;
+    private final Plugin plugin;
 
     private final static Map<ConfigType, YamlConfiguration> configurations = new ConcurrentHashMap<>();
 
-    public Configuration(Skyline skyline) {
-        this.skyline = skyline;
+    public Configuration(Plugin plugin) {
+        this.plugin = plugin;
     }
 
     public void load() {
@@ -39,7 +39,7 @@ public class Configuration {
             File file = getFile(configType);
 
             if(!file.exists()) {
-                skyline.saveResource(file.getName(), false);
+                plugin.saveResource(file.getName(), false);
             }
 
             YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(file);
@@ -56,7 +56,7 @@ public class Configuration {
         try {
             getConfig(configType).save(getFile(configType));
         } catch (IOException e) {
-            skyline.getLogger().severe("Could not save " + configType.name() + " because " + e);
+            plugin.getLogger().severe("Could not save " + configType.name() + " because " + e);
         }
     }
 
@@ -67,9 +67,9 @@ public class Configuration {
     @SuppressWarnings("all")
     private File getFile(ConfigType configType) {
         if(configType == ConfigType.Messages) {
-            return new File(skyline.getDataFolder(), "messages.yml");
+            return new File(plugin.getDataFolder(), "messages.yml");
         } else {
-            return new File(skyline.getDataFolder(), "config.yml");
+            return new File(plugin.getDataFolder(), "config.yml");
         }
     }
 

@@ -14,8 +14,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Skyline. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.albusthepenguin.skyline.Commands;
+package me.albusthepenguin.metaMorph.Commands;
 
+import lombok.Getter;
+import me.albusthepenguin.metaMorph.MetaMorph;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
@@ -27,35 +29,23 @@ import java.util.List;
  * Subclasses of this class should define the specific behavior, permissions,
  * and argument handling for each subcommand.
  */
+@Getter
 public abstract class MinecraftSubCommand {
 
-    /**
-     * Gets the name of the subcommand.
-     * <p>
-     * This is the identifier used to trigger the subcommand (e.g., "/command <subcommand>").
-     *
-     * @return The name of the subcommand.
-     */
-    public abstract String getName();
+    private final MetaMorph metaMorph;
 
-    /**
-     * Gets the permission required to execute the subcommand.
-     * <p>
-     * This permission string is used to check if the player has the necessary rights
-     * to use the subcommand.
-     *
-     * @return The permission string required to execute the subcommand, or null if no permission is required.
-     */
-    public abstract String getPermission();
+    private final String name;
 
-    /**
-     * Gets the syntax or usage message for the subcommand.
-     * <p>
-     * This syntax string typically explains how to use the subcommand and what arguments it expects.
-     *
-     * @return The syntax message for the subcommand.
-     */
-    public abstract String getSyntax();
+    private final String permission;
+
+    private final String syntax;
+
+    protected MinecraftSubCommand(MetaMorph metaMorph, String name, String permission, String syntax) {
+        this.metaMorph = metaMorph;
+        this.name = name;
+        this.permission = permission;
+        this.syntax = syntax;
+    }
 
     /**
      * Executes the subcommand when invoked by a player.

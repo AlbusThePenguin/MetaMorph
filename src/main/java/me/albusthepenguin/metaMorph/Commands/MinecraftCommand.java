@@ -14,8 +14,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Skyline. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.albusthepenguin.skyline.Commands;
+package me.albusthepenguin.metaMorph.Commands;
 
+import lombok.Getter;
+import me.albusthepenguin.metaMorph.MetaMorph;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
@@ -23,7 +25,6 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.plugin.Plugin;
 
-import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
@@ -34,24 +35,28 @@ import java.util.Objects;
  * This class implements both CommandExecutor and TabCompleter to handle command execution and tab completion.
  * Subclasses must provide implementations for the abstract methods to define command-specific behavior.
  */
+@Getter
 @SuppressWarnings("unused")
 public abstract class MinecraftCommand extends BukkitCommand implements TabExecutor {
 
+    private final MetaMorph metaMorph;
+
     /**
      * Constructor for creating a new command.
-     * @param plugin        the plugin.
+     * @param metaMorph        the plugin.
      * @param name          The name of the command.
      * @param permission    The permission for the index command. For sub commands a player will need both this + the sub command permission.
      * @param description   The description of the command.
      * @param usageMessage  The usage message for the command.
      * @param aliases       A list of aliases for the command.
      */
-    public MinecraftCommand(@Nonnull Plugin plugin, @Nonnull String name, @Nonnull String permission, @Nonnull String description, @Nonnull String usageMessage, @Nonnull List<String> aliases) {
+    public MinecraftCommand(MetaMorph metaMorph, String name, String permission, String description, String usageMessage, List<String> aliases) {
         super(name);
         setDescription(description);
         setUsage(usageMessage);
         setAliases(aliases);
         setPermission(permission);
+        this.metaMorph = metaMorph;
     }
 
     /**
@@ -63,7 +68,7 @@ public abstract class MinecraftCommand extends BukkitCommand implements TabExecu
      * @return True if the command was successful, false otherwise.
      */
     @Override
-    public boolean execute(CommandSender sender, @Nonnull String commandLabel, @Nonnull String[] args) {
+    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
         if (sender.hasPermission(Objects.requireNonNull(getPermission()))) {
             return onCommand(sender, this, commandLabel, args);
         } else {
@@ -80,9 +85,8 @@ public abstract class MinecraftCommand extends BukkitCommand implements TabExecu
      * @param args        The arguments passed to the command.
      * @return A list of suggested completions based on the current input.
      */
-    @Nonnull
     @Override
-    public List<String> tabComplete(@Nonnull CommandSender sender, @Nonnull String alias, @Nonnull String[] args) {
+    public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
         // Ensure that onTabComplete does not return null
         return Objects.requireNonNull(onTabComplete(sender, this, alias, args));
     }
@@ -98,7 +102,7 @@ public abstract class MinecraftCommand extends BukkitCommand implements TabExecu
      * @param args        The arguments passed to the command.
      * @return True if the command was successfully executed, false otherwise.
      */
-    public abstract boolean onCommand(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String label, @Nonnull String[] args);
+    public abstract boolean onCommand(CommandSender sender, Command command, String label, String[] args);
 
     /**
      * Abstract method for handling tab completion.
@@ -111,7 +115,7 @@ public abstract class MinecraftCommand extends BukkitCommand implements TabExecu
      * @param args        The arguments passed to the command.
      * @return A list of suggested completions based on the current input.
      */
-    public abstract List<String> onTabComplete(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String alias, @Nonnull String[] args);
+    public abstract List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args);
 
     /**
      * Registers the command with the server.

@@ -1,0 +1,41 @@
+Settings:
+  economy-support: true
+
+  #Want the players to need the item permission in order to buy or access it?
+  require-permissions: true
+
+Categories:
+  furnitures:
+    #Gui display item for this category
+    material: PAPER
+    model-id: 32
+    display-name: "&eFurnitures"
+    lore:
+      - "&7Check out the available furnitures"
+  swords:
+    #Gui display item for this category
+    material: DIAMOND_SWORD
+    model-id: 12
+    display-name: "&bSwords"
+    lore:
+      - "&7Check out the available swords"
+
+# Configuration for the metamorph command functionality in-game.
+Command:
+  # The primary name for the metamorph command used in-game.
+  # Example: Setting this to 'metamorph' means players will use /metamorph in-game.
+  name: 'metamorph'  # This defines the command players will type.
+
+  # A brief description of the /metamorph command for help menus or command listings.
+  description: 'Explore the server resource pack in style!'  # Describe the command's purpose.
+
+  # Instructions on how to properly use the command.
+  # Provides users with an example usage format.
+  usage: '/metamorph <sub command | optional>'  # Shows how to execute the command.
+
+  # A list of aliases for the /metamorph command.
+  # Players can use these shortcuts to invoke the command.
+  # To disable aliases, simply set this to 'aliases: []'.
+  aliases:
+    - 'mm'   # Allow players to use /mm as a shortcut for /metamorph.
+    - 'mmo'    # Allow players to use /mmo as a shortcut for /metamorph.

@@ -1,16 +1,23 @@
-package me.albusthepenguin.metaMorph;
+package me.albusthepenguin.metaMorph.Models;
 
 import lombok.Getter;
+import lombok.NonNull;
+import me.albusthepenguin.metaMorph.Message;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 @Getter
 public class Model {
+
+    private final Plugin plugin;
 
     private final ItemStack itemStack;
 
@@ -20,7 +27,10 @@ public class Model {
 
     private final double price;
 
-    public Model(@Nonnull ConfigurationSection section) {
+    private final String displayName;
+
+    public Model(Plugin plugin, @NonNull ConfigurationSection section) {
+        this.plugin = plugin;
         this.id  = section.getName();
 
         String materialName = section.getString("material");
@@ -43,7 +53,10 @@ public class Model {
         //Todo: do the permission check for 'none'.
         this.permission = section.getString("permission", "none");
 
-        String displayName = section.getString("display-name");
+        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+        container.set(new NamespacedKey(this.plugin, "metamorph_model"), PersistentDataType.STRING, this.id);
+
+        this.displayName = section.getString("display-name");
         if(displayName == null) {
             throw new IllegalArgumentException(this.id + " do not have a valid 'display-name'.");
         }
