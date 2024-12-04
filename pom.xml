@@ -6,7 +6,7 @@
 
     <groupId>me.albusthepenguin</groupId>
     <artifactId>MetaMorph</artifactId>
-    <version>1.8.0</version>
+    <version>1.8.1</version>
     <packaging>jar</packaging>
 
     <name>MetaMorph</name>

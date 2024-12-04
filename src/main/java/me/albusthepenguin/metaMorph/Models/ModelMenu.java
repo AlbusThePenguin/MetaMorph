@@ -53,9 +53,14 @@ public class ModelMenu extends Menu {
 
         this.models = models;
 
-        this.maxPages = 50;
+        this.maxPages = getMP(models.size());
 
         this.namespacedKey = new NamespacedKey(super.metaMorph, "metamorph_model");
+    }
+
+    private int getMP(int itemAmount) {
+        int maxPerPage = super.maxItemsPerPage;
+        return (itemAmount + maxPerPage - 1) / maxPerPage; // This is an efficient way to calculate the ceiling of division
     }
 
     @Override
