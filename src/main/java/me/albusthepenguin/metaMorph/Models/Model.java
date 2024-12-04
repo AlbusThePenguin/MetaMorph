@@ -45,6 +45,8 @@ public class Model {
 
     private final int model;
 
+    private final List<String> lore;
+
     public Model(MetaMorph metaMorph, @NonNull ConfigurationSection section) {
         this.metaMorph = metaMorph;
         this.id  = section.getName();
@@ -77,11 +79,9 @@ public class Model {
         }
         itemMeta.setDisplayName(this.metaMorph.getMessage().setColor(displayName));
 
-        List<String> lore = section.getStringList("lore").stream()
+        this.lore = section.getStringList("lore").stream()
                 .map(this.metaMorph.getMetaMorph().getMessage()::setColor)
                 .toList();
-
-        itemMeta.setLore(lore);
 
         this.price = section.getDouble("price");
 

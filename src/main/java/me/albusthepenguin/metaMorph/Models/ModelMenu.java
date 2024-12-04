@@ -33,11 +33,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ModelMenu extends Menu {
 
@@ -200,7 +198,8 @@ public class ModelMenu extends Menu {
     }
 
     private boolean hasPermission(Player player, Model model) {
-        return player.hasPermission(model.getPermission()) || model.getPermission().equalsIgnoreCase("none");
+        if(player.hasPermission(model.getPermission())) return true;
+        return model.getPermission().equalsIgnoreCase("none");
     }
 
     private ItemStack addOwned(Player player, Model model) {
@@ -208,13 +207,14 @@ public class ModelMenu extends Menu {
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (itemMeta == null) return itemStack;
 
-        List<String> lore = Optional.ofNullable(itemMeta.getLore()).orElseGet(ArrayList::new);
-
-        lore.addAll(this.getLore(player, model));
-
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        List<String> lore = Stream.concat(
+                Optional.ofNullable(model.getLore()).orElseGet(ArrayList::new).stream(),
+                getLore(player, model).stream()
+        ).collect(Collectors.toList());
 
         itemMeta.setLore(lore);
+        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
@@ -224,8 +224,9 @@ public class ModelMenu extends Menu {
                 .getConfiguration()
                 .getConfig(ConfigType.Config)
                 .getConfigurationSection("lore-settings");
+
         if (section == null) {
-            throw new IllegalArgumentException("Could not find the 'lore-settings' section in config.yml.");
+            return Collections.emptyList();
         }
 
         List<String> rawLore = hasPermission(player, model)
@@ -233,14 +234,10 @@ public class ModelMenu extends Menu {
                 : section.getStringList("unowned");
 
         return rawLore.stream()
-                .map(index -> {
-                    if (index.contains("{item-display}")) {
-                        index = index.replace("{item-display}", model.getDisplayName());
-                    }
-                    if (index.contains("{price}")) {
-                        index = index.replace("{price}", String.valueOf(model.getPrice()));
-                    }
-                    return super.message.setColor(index);
+                .map(line -> {
+                    line = line.replace("{item-display}", model.getDisplayName());
+                    line = line.replace("{price}", String.valueOf(model.getPrice()));
+                    return super.message.setColor(line);
                 })
                 .collect(Collectors.toList());
     }
