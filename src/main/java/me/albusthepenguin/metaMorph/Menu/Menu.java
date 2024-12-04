@@ -21,7 +21,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.NonNull;
-import net.md_5.bungee.api.ChatColor;
+import me.albusthepenguin.metaMorph.Message;
+import me.albusthepenguin.metaMorph.MetaMorph;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -33,7 +34,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 
@@ -45,7 +45,10 @@ import java.util.UUID;
 @SuppressWarnings("unused")
 @Getter
 public abstract class Menu implements InventoryHolder {
-    protected Plugin plugin;
+
+    protected MetaMorph metaMorph;
+
+    protected Message message;
 
     protected MenuUtilities menuUtilities;
 
@@ -67,9 +70,10 @@ public abstract class Menu implements InventoryHolder {
     protected int maxItemsPerPage = 28;
     protected int index = 0;
 
-    public Menu(Plugin plugin, MenuUtilities menuUtilities) {
-        this.plugin = plugin;
-        this.key = new NamespacedKey(plugin, "clicked");
+    public Menu(MetaMorph metaMorph, MenuUtilities menuUtilities) {
+        this.metaMorph = metaMorph;
+        this.message = this.metaMorph.getMessage();
+        this.key = new NamespacedKey(metaMorph, "clicked");
         this.menuUtilities = menuUtilities;
 
         this.nextPage = new ItemStack(Material.ARROW);
@@ -89,7 +93,7 @@ public abstract class Menu implements InventoryHolder {
     public abstract void setMenuItems();
 
     public void open() {
-        inventory = Bukkit.getServer().createInventory(this, getSlots(), this.color(getMenuName()));
+        inventory = Bukkit.getServer().createInventory(this, getSlots(), this.message.setColor(getMenuName()));
 
         this.setMenuItems();
         menuUtilities.getPlayer().openInventory(inventory);
@@ -113,25 +117,12 @@ public abstract class Menu implements InventoryHolder {
         this.open();
     }
 
-    public String color(String text) {
-        String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
-        String[] texts = text.split(String.format(WITH_DELIMITER, "&"));
+    public void playNope(Player player) {
+        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+    }
 
-        StringBuilder finalText = new StringBuilder();
-
-        for (int i = 0; i < texts.length; i++) {
-            if (texts[i].equalsIgnoreCase("&")) {
-                i++;
-                if (texts[i].charAt(0) == '#') {
-                    finalText.append(ChatColor.of(texts[i].substring(0, 7))).append(texts[i].substring(7));
-                } else {
-                    finalText.append(ChatColor.translateAlternateColorCodes('&', "&" + texts[i]));
-                }
-            } else {
-                finalText.append(texts[i]);
-            }
-        }
-        return finalText.toString();
+    public void playYes(Player player) {
+        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
     }
 
     private final Gson gson = new Gson();

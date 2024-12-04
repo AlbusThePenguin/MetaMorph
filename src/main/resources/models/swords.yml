@@ -1,85 +1,46 @@
-# Configuration example for an in-game item called "King Slayer."
-# This setup demonstrates how to create a custom sword with a unique material,
-# model ID, display name, lore, and an optional price for in-game purchases.
 king-slayer:
-  # Material defines the base item type. This example uses 'DIAMOND_SWORD' as the material.
   material: DIAMOND_SWORD
-
-  # The item category, will be sorted in
-  category: swords
-
-  # You can either allow player's to buy this using in-game currency or obtain them by permission's.
-  permission: "mm.furnitures.throne"
-
-  # The custom model ID for the sword. This is used to assign a unique appearance
-  # when combined with a resource pack.
+  permission: "mm.swords.king_slayer"
   model-id: 201
-
-  # Display name is the custom name of the sword shown in-game, formatted with color codes.
-  # Here, it's styled to represent "King Slayer" with a legendary theme.
-  display-name: "&4King Slayer"
-
-  enchantments:
-    - 'SHARP'
-
-  # Lore is a list of text lines that add context, flavor, and instructions for the item.
-  # Color codes are used to enhance the visual appeal.
+  display-name: "&#8B0000King Slayer"
   lore:
-    - '&7A legendary blade forged in the fires of rebellion.'           # Brief backstory for the sword.
-    - '&7This weapon is said to carry the strength of a thousand warriors,' # Additional details to emphasize its lore.
-    - '&7bestowed upon those who dare to challenge tyranny.'            # Builds a narrative of heroism.
-    - '&7Price: &e$500'                                                # Clearly states the item price.
-    - ''                                                               # Blank line for better spacing in the tooltip.
-    - '&7Click to wield the &4King Slayer&7.'                          # Instructions for how to acquire the item.
-
-  # Price specifies the in-game currency cost for purchasing the sword.
-  # This value is optional and requires an economy plugin to function.
+    - "&#DC143CA legendary blade forged in the fires of rebellion."
+    - "&#DC143CThis weapon is said to carry the strength of a thousand warriors,"
+    - "&#DC143Cbestowed upon those who dare to challenge tyranny."
   price: 500
 
 shadow-fang:
   material: IRON_SWORD
-  category: swords
+  permission: "mm.swords.shadow_fang"
   model-id: 202
-  display-name: "&8Shadow Fang"
+  display-name: "&#4B0082Shadow Fang"
   lore:
-    - '&7An elegant weapon for those who strike unseen.'
-    - '&7Price: &e$400'
-    - ''
-    - '&7Click to claim the &8Shadow Fang&7.'
+    - "&#8A2BE2An elegant weapon for those who strike unseen."
   price: 400
 
 crystal-edge:
   material: GOLDEN_SWORD
-  category: swords
+  permission: "mm.swords.crystal_edge"
   model-id: 203
-  display-name: "&bCrystal Edge"
+  display-name: "&#4682B4Crystal Edge"
   lore:
-    - '&7A shimmering blade with a mystic aura.'
-    - '&7Price: &e$350'
-    - ''
-    - '&7Click to acquire the &bCrystal Edge&7.'
+    - "&#87CEEBA shimmering blade with a mystic aura."
   price: 350
 
 ember-blade:
   material: NETHERITE_SWORD
-  category: swords
+  permission: "mm.swords.ember_blade"
   model-id: 204
-  display-name: "&cEmber Blade"
+  display-name: "&#FF4500Ember Blade"
   lore:
-    - '&7A blade infused with the fury of flames.'
-    - '&7Price: &e$600'
-    - ''
-    - '&7Click to unleash the &cEmber Blade&7.'
+    - "&#FF6347A blade infused with the fury of flames."
   price: 600
 
 frostbite:
   material: STONE_SWORD
-  category: swords
+  permission: "mm.swords.frostbite"
   model-id: 205
-  display-name: "&9Frostbite"
+  display-name: "&#00CED1Frostbite"
   lore:
-    - '&7A chilling weapon to freeze your foes.'
-    - '&7Price: &e$300'
-    - ''
-    - '&7Click to wield the &9Frostbite&7.'
+    - "&#AFEEEEA chilling weapon to freeze your foes."
   price: 300

@@ -1,0 +1,99 @@
+goliaths-pickaxe:
+  material: DIAMOND_PICKAXE
+  permission: "mm.pickaxes.goliaths_pickaxe"
+  model-id: 201
+  display-name: "&#4a4a4aGoliath's Pickaxe"
+  lore:
+    - '&#7c7c7cA legendary pickaxe forged for the giants of old.'
+    - '&#7c7c7cOnly the strongest miners can wield this power.'
+  price: 750
+
+golden-miner:
+  material: GOLDEN_PICKAXE
+  permission: "mm.pickaxes.golden_miner"
+  model-id: 202
+  display-name: "&#f9c909Golden Miner"
+  lore:
+    - '&#fff59eBlessed by the gods of speed and precision.'
+    - '&#fff59eFragile, yet unmatched in its efficiency.'
+  price: 450
+
+crystal-digger:
+  material: NETHERITE_PICKAXE
+  permission: "mm.pickaxes.crystal_digger"
+  model-id: 203
+  display-name: "&#89cff0Crystal Digger"
+  lore:
+    - '&#d4f1f9Infused with crystals that shimmer with enchantment.'
+    - '&#d4f1f9Unyielding and unmatched in durability.'
+  price: 1200
+
+enchanted-excavator:
+  material: IRON_PICKAXE
+  permission: "mm.pickaxes.enchanted_excavator"
+  model-id: 204
+  display-name: "&#e08effEnchanted Excavator"
+  lore:
+    - '&#dda0ddMine with unparalleled precision and magic.'
+    - '&#dda0ddThe arcane secrets within fuel its power.'
+  price: 900
+
+miners-anthem:
+  material: STONE_PICKAXE
+  permission: "mm.pickaxes.miners_anthem"
+  model-id: 205
+  display-name: "&#4f4f4fMiner's Anthem"
+  lore:
+    - '&#7c7c7cAn ode to the enduring spirit of miners.'
+    - '&#7c7c7cHumble yet reliable in every swing.'
+  price: 250
+
+obsidian-cracker:
+  material: NETHERITE_PICKAXE
+  permission: "mm.pickaxes.obsidian_cracker"
+  model-id: 206
+  display-name: "&#8b008bObsidian Cracker"
+  lore:
+    - '&#c71585Harness the raw power to shatter the unbreakable.'
+    - '&#c71585A must-have for those who conquer the depths.'
+  price: 1500
+
+emerald-breaker:
+  material: DIAMOND_PICKAXE
+  permission: "mm.pickaxes.emerald_breaker"
+  model-id: 207
+  display-name: "&#50c878Emerald Breaker"
+  lore:
+    - '&#98fb98Imbued with the essence of emeralds from deep caves.'
+    - '&#98fb98A shimmering beauty with devastating power.'
+  price: 600
+
+shadow-cleaver:
+  material: DIAMOND_PICKAXE
+  permission: "mm.pickaxes.shadow_cleaver"
+  model-id: 208
+  display-name: "&#1a1a1aShadow Cleaver"
+  lore:
+    - '&#696969Born from the void, cutting through the darkest stone.'
+    - '&#696969Shadows guide its every strike.'
+  price: 1100
+
+blazing-edge:
+  material: GOLDEN_PICKAXE
+  permission: "mm.pickaxes.blazing_edge"
+  model-id: 209
+  display-name: "&#ff4500Blazing Edge"
+  lore:
+    - '&#ff6347A pickaxe engulfed in eternal flames.'
+    - '&#ff6347Perfect for miners who seek the heat of adventure.'
+  price: 500
+
+frostbite:
+  material: NETHERITE_PICKAXE
+  permission: "mm.pickaxes.frostbite"
+  model-id: 210
+  display-name: "&#00ffffFrostbite"
+  lore:
+    - '&#add8e6Chilled to perfection, it freezes the stone it strikes.'
+    - '&#add8e6A relic of the frost giants from icy realms.'
+  price: 1300

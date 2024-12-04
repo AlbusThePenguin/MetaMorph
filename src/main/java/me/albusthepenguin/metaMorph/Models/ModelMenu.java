@@ -1,22 +1,45 @@
+/*
+ * This file is part of MetaMorph.
+ *
+ * MetaMorph is a free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * MetaMorph is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with MetaMorph. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.albusthepenguin.metaMorph.Models;
 
+import me.albusthepenguin.metaMorph.Configs.ConfigType;
 import me.albusthepenguin.metaMorph.Menu.Menu;
 import me.albusthepenguin.metaMorph.Menu.MenuUtilities;
+import me.albusthepenguin.metaMorph.MetaMorph;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.Plugin;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ModelMenu extends Menu {
-
-    private final Category category;
 
     private final ModelHandler modelHandler;
 
@@ -24,14 +47,17 @@ public class ModelMenu extends Menu {
 
     private final NamespacedKey namespacedKey;
 
-    public ModelMenu(Plugin plugin, MenuUtilities menuUtilities, Category category, ModelHandler modelHandler) {
-        super(plugin, menuUtilities);
-        this.category = category;
+    private final List<Model> models;
+
+    public ModelMenu(MetaMorph metaMorph, MenuUtilities menuUtilities, ModelHandler modelHandler, List<Model> models) {
+        super(metaMorph, menuUtilities);
         this.modelHandler = modelHandler;
+
+        this.models = models;
 
         this.maxPages = 50;
 
-        this.namespacedKey = new NamespacedKey(super.plugin, "metamorph_model");
+        this.namespacedKey = new NamespacedKey(super.metaMorph, "metamorph_model");
     }
 
     @Override
@@ -54,51 +80,91 @@ public class ModelMenu extends Menu {
 
         if (clicked == 0) {
             if (this.page <= 0) {
-                player.sendMessage(super.color("&cYou're already on the first page."));
+                player.sendMessage(super.message.get("page-first", null, true));
+                super.playNope(player);
                 return;
             }
             this.page -= 1;
             this.changePage(player);
         } else if (clicked == 8) {
             if (this.page >= this.maxPages) {
-                player.sendMessage(super.color("&cYou're already on the last page."));
+                player.sendMessage(super.message.get("page-last", null, true));
+                super.playNope(player);
                 return;
             }
             this.page += 1;
             this.changePage(player);
-        } else if(clicked == 53) {
+        } else if (clicked == 53) {
             player.getOpenInventory().close();
         } else {
 
             ItemStack itemStack = event.getCurrentItem();
-            if(itemStack == null) {
-                this.plugin.getLogger().info("ItemStack is null.");
+            if (itemStack == null) {
+                super.metaMorph.getLogger().info("ItemStack is null.");
+                super.playNope(player);
                 return;
             }
 
             ItemMeta itemMeta = itemStack.getItemMeta();
-            if(itemMeta == null) {
-                this.plugin.getLogger().info("Item Meta is null-");
+            if (itemMeta == null) {
+                super.metaMorph.getLogger().info("Item Meta is null-");
+                super.playNope(player);
                 return;
             }
 
             PersistentDataContainer container = itemMeta.getPersistentDataContainer();
             String modelID = container.get(this.namespacedKey, PersistentDataType.STRING);
-            if(modelID == null) {
-                this.plugin.getLogger().info("Model is null.");
+            if (modelID == null) {
+                super.metaMorph.getLogger().info("Model is null.");
+                super.playNope(player);
                 return;
             }
 
-            Model modelClicked = this.modelHandler.getModel(modelID);
+            Model model = this.modelHandler.getModels().get(modelID);
 
-            if(modelClicked == null) {
-                super.plugin.getLogger().severe(modelID + " is not a valid category. Please check configs.yml.");
+            if (model == null) {
+                super.metaMorph.getLogger().severe(modelID + " is not a valid model. Please check configs.yml.");
+                super.playNope(player);
                 return;
             }
 
-            //Todo: handle the model?
-            this.modelHandler.getMetaMorph().getPreview().spawn(player, modelClicked); //I guess we try?
+            ClickType clickType = event.getClick();
+
+            if (clickType == ClickType.MIDDLE) {
+                if (this.modelHandler.getMetaMorph().getPreview().spawn(player, model)) {
+                    player.getOpenInventory().close();
+                    super.playYes(player);
+                } else {
+                    super.playNope(player);
+                }
+            } else if (clickType == ClickType.LEFT || clickType == ClickType.RIGHT) {
+                if (hasPermission(player, model)) {
+                    setModel(player, model);
+                    super.playYes(player);
+                    player.getOpenInventory().close();
+                } else {
+                    String display = model.getDisplayName();
+                    String price = String.valueOf(model.getPrice());
+
+                    if (this.modelHandler.getMetaMorph().getVaultHook().buy(player, model)) {
+                        player.sendMessage(super.message.get("buy-success", Map.of("{name}", display, "{price}", price), true));
+                        super.playYes(player);
+                        super.open();
+                    } else {
+                        player.sendMessage(super.message.get("buy-fail", Map.of("{name}", display, "{price}", price), true));
+                        super.playNope(player);
+                    }
+                }
+            }
         }
+    }
+
+    private void setModel(Player player, Model model) {
+        ItemStack inHand = player.getInventory().getItemInMainHand();
+        ItemMeta handMeta = inHand.getItemMeta();
+        assert handMeta != null;
+        handMeta.setCustomModelData(model.getModel());
+        inHand.setItemMeta(handMeta);
     }
 
     @Override
@@ -113,12 +179,10 @@ public class ModelMenu extends Menu {
         this.inventory.setItem(53, super.close);
         for(int i : this.filtered) super.inventory.setItem(i, super.filter);
 
-        Collection<Model> models = modelHandler.getModels().get(this.category);
-
-        if(models.isEmpty()) return;
+        Player player = super.menuUtilities.getPlayer();
 
         int i = 0;
-        for (Model model : models) {
+        for (Model model : this.models) {
             this.index = super.maxItemsPerPage * page + i;
 
             if (i >= super.maxItemsPerPage) {
@@ -129,12 +193,56 @@ public class ModelMenu extends Menu {
                 break;
             }
 
-            ItemStack itemStack = model.getItemStack();
-
-            this.inventory.addItem(itemStack);
+            this.inventory.addItem(addOwned(player, model));
 
             i++;
         }
+    }
+
+    private boolean hasPermission(Player player, Model model) {
+        return player.hasPermission(model.getPermission()) || model.getPermission().equalsIgnoreCase("none");
+    }
+
+    private ItemStack addOwned(Player player, Model model) {
+        ItemStack itemStack = Optional.ofNullable(model.getItemStack()).orElse(new ItemStack(Material.BARRIER));
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if (itemMeta == null) return itemStack;
+
+        List<String> lore = Optional.ofNullable(itemMeta.getLore()).orElseGet(ArrayList::new);
+
+        lore.addAll(this.getLore(player, model));
+
+        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+
+        itemMeta.setLore(lore);
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+
+    private List<String> getLore(Player player, Model model) {
+        ConfigurationSection section = this.modelHandler.getMetaMorph()
+                .getConfiguration()
+                .getConfig(ConfigType.Config)
+                .getConfigurationSection("lore-settings");
+        if (section == null) {
+            throw new IllegalArgumentException("Could not find the 'lore-settings' section in config.yml.");
+        }
+
+        List<String> rawLore = hasPermission(player, model)
+                ? section.getStringList("owned")
+                : section.getStringList("unowned");
+
+        return rawLore.stream()
+                .map(index -> {
+                    if (index.contains("{item-display}")) {
+                        index = index.replace("{item-display}", model.getDisplayName());
+                    }
+                    if (index.contains("{price}")) {
+                        index = index.replace("{price}", String.valueOf(model.getPrice()));
+                    }
+                    return super.message.setColor(index);
+                })
+                .collect(Collectors.toList());
     }
 
     private final int[] filtered = new int[]{1,2,3,4,5,6,7,9,17,18,27,26,35,36,44,45,46,47,48,49,50,51,52};

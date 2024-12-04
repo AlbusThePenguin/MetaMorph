@@ -1,63 +1,53 @@
+/*
+ * This file is part of MetaMorph.
+ *
+ * MetaMorph is a free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * MetaMorph is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with MetaMorph. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.albusthepenguin.metaMorph.Models;
 
 import lombok.Getter;
-import lombok.NonNull;
-import me.albusthepenguin.metaMorph.Configs.ConfigType;
-import me.albusthepenguin.metaMorph.Configs.Configuration;
 import me.albusthepenguin.metaMorph.MetaMorph;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.util.*;
+import java.util.stream.Collectors;
 
+@Getter
 public class ModelHandler {
-    @Getter
     private final MetaMorph metaMorph;
 
-    private final Configuration configuration;
+    private final Map<String, Model> models = new HashMap<>(); // New map for direct Model lookups
 
-    @Getter
-    private final Set<Category> categories = new HashSet<>();
-
-    @Getter
-    private final Map<Category, List<Model>> models = new HashMap<>();
-
-    private final Map<String, Model> modelMap = new HashMap<>(); // New map for direct Model lookups
-
-    public ModelHandler(MetaMorph metaMorph, Configuration configuration) {
+    public ModelHandler(MetaMorph metaMorph) {
         this.metaMorph = metaMorph;
-        this.configuration = configuration;
-
-        ConfigurationSection categorySection = this.configuration.getConfig(ConfigType.Config).getConfigurationSection("Categories");
-        if (categorySection == null) {
-            throw new IllegalArgumentException("The 'Categories' in config.yml does not exist. Could not load categories.");
-        }
 
         reloadAll();
     }
 
     public void reloadAll() {
-        this.categories.clear();
         this.models.clear();
-        this.modelMap.clear();
 
-        ConfigurationSection categorySection = this.configuration.getConfig(ConfigType.Config).getConfigurationSection("Categories");
-        if (categorySection == null) {
-            throw new IllegalArgumentException("The 'Categories' in config.yml does not exist. Could not load categories.");
-        }
-        loadCategories(categorySection);
+        loadModels();
     }
 
-    private void loadCategories(@NonNull ConfigurationSection section) {
-        for (String index : section.getKeys(false)) {
-            ConfigurationSection indexSection = section.getConfigurationSection(index);
-            if (indexSection == null) {
-                throw new IllegalArgumentException(index + " is not a valid category section. Could not load categories.");
-            }
-            categories.add(new Category(this.metaMorph, indexSection));
-        }
-        loadModels();
+    public List<Model> getModels(Material material) {
+        return this.models.values().stream()
+                .filter(model -> model.getItemStack().getType() == material)
+                .collect(Collectors.toList());
     }
 
     private void loadModels() {
@@ -69,14 +59,14 @@ public class ModelHandler {
             this.metaMorph.getLogger().info("Trying to create model default files.");
 
             if (created) {
-                String furniturePath = "models" + File.separator + "furnitures.yml";
+                String pickaxePath = "models" + File.separator + "pickaxes.yml";
                 String swordsPath = "models" + File.separator + "swords.yml";
 
-                File furnitures = new File(furniturePath);
+                File pickaxes = new File(pickaxePath);
                 File swords = new File(swordsPath);
 
-                if (!furnitures.exists()) {
-                    this.metaMorph.saveResource(furniturePath, false);
+                if (!pickaxes.exists()) {
+                    this.metaMorph.saveResource(pickaxePath, false);
                 }
 
                 if (!swords.exists()) {
@@ -98,37 +88,9 @@ public class ModelHandler {
                 if (section == null) {
                     throw new IllegalArgumentException("Could not find any valid models in " + file.getName());
                 }
-                loadModel(section);
+                this.models.put(section.getName(), new Model(this.metaMorph, section));
             }
         }
-    }
-
-    public Category getCategory(String categoryName) {
-        return categories.stream()
-                .filter(category -> category.getId().equalsIgnoreCase(categoryName))
-                .findFirst()
-                .orElse(null);
-    }
-
-    public Model getModel(String modelName) {
-        return modelMap.get(modelName.toLowerCase()); // Direct lookup from modelMap
-    }
-
-    private void loadModel(@NonNull ConfigurationSection section) {
-        String categoryName = section.getString("category", null);
-        if (categoryName == null) {
-            throw new IllegalArgumentException(section.getName() + "'s category is not valid.");
-        }
-
-        Category category = getCategory(categoryName);
-        if (category == null) {
-            throw new IllegalArgumentException(section.getName() + " does not have a valid category: " + categoryName);
-        }
-
-        List<Model> modelList = models.computeIfAbsent(category, k -> new ArrayList<>());
-        Model model = new Model(this.metaMorph, section);
-        modelList.add(model);
-        modelMap.put(model.getId().toLowerCase(), model); // Add to modelMap for quick lookup
     }
 }
 

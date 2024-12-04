@@ -1,9 +1,25 @@
+/*
+ * This file is part of MetaMorph.
+ *
+ * MetaMorph is a free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * MetaMorph is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with MetaMorph. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.albusthepenguin.metaMorph.Commands;
 
-import me.albusthepenguin.metaMorph.Models.CategoryMenu;
 import me.albusthepenguin.metaMorph.Menu.MenuUtilities;
-import me.albusthepenguin.metaMorph.Message;
 import me.albusthepenguin.metaMorph.MetaMorph;
+import me.albusthepenguin.metaMorph.Models.Model;
+import me.albusthepenguin.metaMorph.Models.ModelMenu;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -33,6 +49,13 @@ public class CommandManager extends MinecraftCommand {
                         () -> metaMorph.getLogger().info("LuckPerms support was not found disabling the command /metamorph give <player> <model>")
                 );
 
+        this.subcommands.add(new reloadCommand(
+                this.getMetaMorph(),
+                "reload",
+                "mm.admin",
+                "metamorph reload"
+        ));
+
         this.register(metaMorph);
     }
 
@@ -46,7 +69,7 @@ public class CommandManager extends MinecraftCommand {
                         if (player.hasPermission(subCommand.getPermission())) {
                             subCommand.perform(player, args);
                         } else {
-                            player.sendMessage(Message.setColor("&cYou don't have permission to perform this command!"));
+                            player.sendMessage(super.getMessage().get("no-permission", null, true));
                         }
                         return true; // Command handled successfully
                     } else if (sender instanceof ConsoleCommandSender consoleCommandSender) {
@@ -56,13 +79,18 @@ public class CommandManager extends MinecraftCommand {
                 }
             }
 
-            sender.sendMessage(Message.setColor("&cFound no command by that name."));
-            return true; // Indicate that the command was not recognized x
+            sender.sendMessage(super.getMessage().get("no-command", null, true));
+            return true;
         }
 
         if(sender instanceof Player player) {
-            MenuUtilities menuUtilities = new MenuUtilities(player);
-            new CategoryMenu(super.getMetaMorph(), menuUtilities, super.getMetaMorph().getModelHandler()).open();
+            List<Model> models = super.getMetaMorph().getModelHandler().getModels(player.getInventory().getItemInMainHand().getType());
+            if (!models.isEmpty()) {
+                MenuUtilities menuUtilities = new MenuUtilities(player);
+                new ModelMenu(super.getMetaMorph(), menuUtilities, super.getMetaMorph().getModelHandler(), models).open();
+            } else {
+                player.sendMessage(super.getMessage().get("no-models-material", null, true));
+            }
         }
 
         return true;

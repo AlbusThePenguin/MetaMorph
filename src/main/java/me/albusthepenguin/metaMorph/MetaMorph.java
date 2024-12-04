@@ -1,3 +1,19 @@
+/*
+ * This file is part of MetaMorph.
+ *
+ * MetaMorph is a free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * MetaMorph is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with MetaMorph. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.albusthepenguin.metaMorph;
 
 import lombok.Getter;
@@ -5,9 +21,11 @@ import me.albusthepenguin.metaMorph.Commands.CommandManager;
 import me.albusthepenguin.metaMorph.Configs.ConfigType;
 import me.albusthepenguin.metaMorph.Configs.Configuration;
 import me.albusthepenguin.metaMorph.Hooks.LuckPermsHook;
+import me.albusthepenguin.metaMorph.Hooks.VaultHook;
 import me.albusthepenguin.metaMorph.Menu.MenuListener;
 import me.albusthepenguin.metaMorph.Models.ModelHandler;
 import me.albusthepenguin.metaMorph.Preview.Preview;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,12 +41,13 @@ public final class MetaMorph extends JavaPlugin {
 
     private ModelHandler modelHandler;
 
-    /**
-     * This is @nullable.
-     */
     private LuckPermsHook luckPermsHook;
 
+    private VaultHook vaultHook;
+
     private Preview preview;
+
+    private Message message;
 
     @Override
     public void onEnable() {
@@ -40,18 +59,33 @@ public final class MetaMorph extends JavaPlugin {
         this.configuration = new Configuration(this);
         this.configuration.load();
 
-        this.modelHandler = new ModelHandler(this, this.configuration);
+        this.message = new Message(this.configuration);
+
+        this.modelHandler = new ModelHandler(this);
 
         this.preview = new Preview(this);
 
         Plugin luckPerms = getServer().getPluginManager().getPlugin("LuckPerms");
-        if(luckPerms != null) {
-            luckPermsHook = new LuckPermsHook();
+        if(luckPerms == null) {
+            this.getLogger().severe("Could not find LuckPerms. This plugin requires 'LuckPerms' to have the give and buy feature.");
+            this.getServer().getPluginManager().disablePlugin(this);
+        } else {
+            this.luckPermsHook = new LuckPermsHook();
+        }
+
+        Plugin vault = getServer().getPluginManager().getPlugin("Vault");
+        if (vault == null) {
+            this.getLogger().severe("Could not find LuckPerms. This plugin requires 'Vault' to have the give and buy feature.");
+            this.getServer().getPluginManager().disablePlugin(this);
+        } else {
+            this.vaultHook = new VaultHook(this);
         }
 
         this.buildInGameCommand();
 
         this.getServer().getPluginManager().registerEvents(new MenuListener(), this);
+
+        new Metrics(this, 19112);
     }
 
     private void buildInGameCommand() {

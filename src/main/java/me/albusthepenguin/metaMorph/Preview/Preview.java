@@ -1,76 +1,114 @@
+/*
+ * This file is part of MetaMorph.
+ *
+ * MetaMorph is a free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * MetaMorph is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with MetaMorph. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.albusthepenguin.metaMorph.Preview;
 
 import me.albusthepenguin.metaMorph.Message;
+import me.albusthepenguin.metaMorph.MetaMorph;
 import me.albusthepenguin.metaMorph.Models.Model;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class Preview {
 
-    private final Plugin plugin;
+    private final MetaMorph metaMorph;
 
-    public Preview(Plugin plugin) {
-        this.plugin = plugin;
+    private final Message message;
+
+    public Preview(MetaMorph metaMorph) {
+        this.metaMorph = metaMorph;
+
+        this.message = this.metaMorph.getMessage();
     }
 
-    public void spawn(Player player, Model model) {
-        this.plugin.getLogger().info("Spawning a preview! :)");
-
-        if (!player.hasPermission(model.getPermission()) && !model.getPermission().equalsIgnoreCase("none")) {
-            player.sendMessage(Message.setColor("You don't have permission to preview " + model.getDisplayName()));
-            return;
+    /**
+     * Spawns an animated ItemDisplay in front of the player at their feet level,
+     * 4 blocks in the direction they are facing.
+     */
+    public boolean spawn(Player player, Model model) {
+        // Permission check
+        if (!player.hasPermission("mm.preview") && !model.getPermission().equalsIgnoreCase("none")) {
+            player.sendMessage(this.message.get("no-permission", null, true));
+            return false;
         }
 
-        Location eyeLocation = player.getEyeLocation().add(0, -2, 0);
-        Vector direction = eyeLocation.getDirection();
-        Location location = eyeLocation.add(direction.multiply(2));
-        World world = location.getWorld();
+        // Determine spawn location 4 blocks from player's feet in the direction they are looking
+        Location feetLocation = player.getLocation(); // Player's feet location
+        Vector direction = feetLocation.getDirection().normalize();
+        Location spawnLocation = feetLocation.add(direction.multiply(4));
+        World world = spawnLocation.getWorld();
 
         if (world == null) {
             throw new IllegalArgumentException("Could not spawn 'Preview' because world is null.");
         }
 
-        ItemDisplay itemDisplay = world.spawn(location, ItemDisplay.class);
+        // Spawn the ItemDisplay
+        ItemDisplay itemDisplay = world.spawn(spawnLocation, ItemDisplay.class);
         itemDisplay.setItemStack(model.getItemStack());
-        itemDisplay.setGlowing(true);
-        itemDisplay.setCustomName(Message.setColor("&ePreview: " + model.getDisplayName()));
+        itemDisplay.setBillboard(Display.Billboard.CENTER);
+        itemDisplay.setCustomName(this.message.setColor("&ePreview: " + model.getDisplayName()));
         itemDisplay.setCustomNameVisible(true);
 
-        animate(itemDisplay, location);
+        // Animate the spawned ItemDisplay
+        animate(itemDisplay, spawnLocation);
+        return true;
     }
 
-    private void animate(ItemDisplay itemDisplay, Location location) {
-        final double maxHeight = 5.0;
-        final double stepHeight = 0.1;
-        final long taskInterval = 2L;
-        final int spinSpeed = 5;
+    /**
+     * Animates the ItemDisplay by moving it upward, spinning it, and adding a cyan particle trail.
+     */
+    private void animate(ItemDisplay itemDisplay, Location baseLocation) {
+        final double maxHeight = 5.0;       // Maximum height the item reaches
+        final double stepHeight = 0.1;     // Incremental height change per tick
+        final long taskInterval = 2L;      // Interval in ticks between updates
+        final int spinSpeed = 5;           // Degrees to spin per tick
 
         new BukkitRunnable() {
-            double currentHeight = 0.0;
+            double currentHeight = 0.0;    // Tracks the current height
 
             @Override
             public void run() {
                 if (currentHeight >= maxHeight) {
-                    Bukkit.getScheduler().runTaskLater(plugin, itemDisplay::remove, 20L);
+                    Bukkit.getScheduler().runTaskLater(metaMorph, itemDisplay::remove, 20L);
                     cancel();
                     return;
                 }
 
-                Location updatedLocation = location.clone().add(0, currentHeight, 0);
+                // Update ItemDisplay location
+                Location updatedLocation = baseLocation.clone().add(0, currentHeight, 0);
                 itemDisplay.teleport(updatedLocation);
 
+                // Spin the ItemDisplay
                 float yaw = (itemDisplay.getLocation().getYaw() + spinSpeed) % 360;
                 updatedLocation.setYaw(yaw);
                 itemDisplay.teleport(updatedLocation);
 
+                // Spawn particle trail
+                World world = updatedLocation.getWorld();
+                if (world != null) {
+                    Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1.0F); // Cyan color
+                    world.spawnParticle(Particle.REDSTONE, updatedLocation, 1, 0, 0, 0, 0, dustOptions);
+                }
+
                 currentHeight += stepHeight;
             }
-        }.runTaskTimer(plugin, 0L, taskInterval);
+        }.runTaskTimer(metaMorph, 0L, taskInterval);
     }
 }

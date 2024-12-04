@@ -1,22 +1,23 @@
 /*
- * This file is part of Skyline.
+ * This file is part of MetaMorph.
  *
- * Skyline is free software: you can redistribute it and/or modify
+ * MetaMorph is a free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Skyline is distributed in the hope that it will be useful,
+ * MetaMorph is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with Skyline. If not, see <http://www.gnu.org/licenses/>.
+ * along with MetaMorph. If not, see <http://www.gnu.org/licenses/>.
  */
 package me.albusthepenguin.metaMorph.Commands;
 
 import lombok.Getter;
+import me.albusthepenguin.metaMorph.Message;
 import me.albusthepenguin.metaMorph.MetaMorph;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -34,6 +35,8 @@ public abstract class MinecraftSubCommand {
 
     private final MetaMorph metaMorph;
 
+    private final Message message;
+
     private final String name;
 
     private final String permission;
@@ -45,6 +48,7 @@ public abstract class MinecraftSubCommand {
         this.name = name;
         this.permission = permission;
         this.syntax = syntax;
+        this.message = this.metaMorph.getMessage();
     }
 
     /**

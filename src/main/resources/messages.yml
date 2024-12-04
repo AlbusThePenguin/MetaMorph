@@ -1,0 +1,19 @@
+no-permission: "&cYou don't have permission to use this."
+no-command: "&cCould not find any command by that name."
+no-player: "&cCan't find &e{player}&c online."
+wrong-syntax: "&cWrong syntax! Please use: &e{syntax}"
+
+give-model: "&aYou have given &e{player}&c the {name}"
+
+buy-fail: "&cYou can't afford the {name}&c the price is &e{price}"
+buy-success: "&aYou've successfully bought {name}&a for &e{price}"
+
+page-first: "&cYou're already on the first page!"
+page-last: "&cYou're on the last page!"
+
+no-models-material: "&cCould not find any models for that item."
+no-model: "&cCould not find any model named &e{name}"
+
+ops-issue: "&cOps! Could not do that."
+
+reload-command: "&aReloaded &econfig.yml&a and &emessages.yml&a."

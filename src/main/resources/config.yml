@@ -1,24 +1,19 @@
-Settings:
-  economy-support: true
-
-  #Want the players to need the item permission in order to buy or access it?
-  require-permissions: true
-
-Categories:
-  furnitures:
-    #Gui display item for this category
-    material: PAPER
-    model-id: 32
-    display-name: "&eFurnitures"
-    lore:
-      - "&7Check out the available furnitures"
-  swords:
-    #Gui display item for this category
-    material: DIAMOND_SWORD
-    model-id: 12
-    display-name: "&bSwords"
-    lore:
-      - "&7Check out the available swords"
+lore-settings:
+  unowned:
+    - ''
+    - '&cYou don''t own {item-display}'
+    - ''
+    - '&7Price for {item-display} &7is &e{price}'
+    - '&7Click to purchase {item-display}'
+    - '&7Middle Mouse Click to preview'
+    - ''
+  owned:
+    - ''
+    - '&aYou already own {item-display}'
+    - ''
+    - '&7Click to equip your item with {item-display}'
+    - '&7Middle Mouse Click to preview'
+    - ''
 
 # Configuration for the metamorph command functionality in-game.
 Command:

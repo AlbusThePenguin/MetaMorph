@@ -2,4 +2,4 @@ name: MetaMorph
 version: '1.8.0'
 main: me.albusthepenguin.metaMorph.MetaMorph
 api-version: '1.20'
-softdepend: [LuckPerms]
+depend: [LuckPerms, Vault]
