@@ -48,6 +48,8 @@ public class reloadCommand extends MinecraftSubCommand {
         configuration.reload(ConfigType.Config);
         configuration.save(ConfigType.Messages);
 
+        super.getMetaMorph().onReload(); //This
+
         console.sendMessage("Reloaded config.yml and messages.yml");
     }
 

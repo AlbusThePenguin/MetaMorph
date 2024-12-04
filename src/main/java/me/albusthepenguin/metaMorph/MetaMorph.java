@@ -88,6 +88,13 @@ public final class MetaMorph extends JavaPlugin {
         new Metrics(this, 19112);
     }
 
+    /*
+    * This may give us some issues. let's see later.
+    * */
+    public void onReload() {
+        this.modelHandler.reloadAll();
+    }
+
     private void buildInGameCommand() {
         ConfigurationSection section = this.configuration.getConfig(ConfigType.Config).getConfigurationSection("Command");
 
