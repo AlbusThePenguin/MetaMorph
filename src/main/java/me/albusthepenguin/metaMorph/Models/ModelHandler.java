@@ -60,18 +60,19 @@ public class ModelHandler {
 
             if (created) {
                 String pickaxePath = "models" + File.separator + "pickaxes.yml";
+                this.generate(new File(pickaxePath), pickaxePath);
+
                 String swordsPath = "models" + File.separator + "swords.yml";
+                this.generate(new File(swordsPath), swordsPath);
 
-                File pickaxes = new File(pickaxePath);
-                File swords = new File(swordsPath);
+                String axePath = "models" + File.separator + "axes.yml";
+                this.generate(new File(axePath), axePath);
 
-                if (!pickaxes.exists()) {
-                    this.metaMorph.saveResource(pickaxePath, false);
-                }
+                String hoePath = "models" + File.separator + "hoes.yml";
+                this.generate(new File(hoePath), hoePath);
 
-                if (!swords.exists()) {
-                    this.metaMorph.saveResource(swordsPath, false);
-                }
+                String shovelPath = "models" + File.separator + "shovels.yml";
+                this.generate(new File(shovelPath), shovelPath);
             }
         }
 
@@ -90,6 +91,12 @@ public class ModelHandler {
                 }
                 this.models.put(section.getName(), new Model(this.metaMorph, section));
             }
+        }
+    }
+
+    private void generate(File file, String path) {
+        if (!file.exists()) {
+            this.metaMorph.saveResource(path, false);
         }
     }
 }

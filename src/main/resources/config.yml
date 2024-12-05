@@ -15,6 +15,39 @@ lore-settings:
     - '&7Middle Mouse Click to preview'
     - ''
 
+GUI:
+  # Button to move to the next page in the GUI for more armor slots.
+  next-page:
+    material: PLAYER_HEAD
+    model: 0
+    display-name: "&aNext Page"
+    lore:
+      - "&7View additional armor slots on the next page."
+    base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2M2MDJkYmE5Zjk3MDFhZTAwMzllNzQ4MWNlYmY2MWM1OGZlOGQzOWQyOWM5MjdiNDg4YmVlNDIyZDlhNjJkNCJ9fX0="
+
+  # Button to go back to the previous page.
+  previous-page:
+    material: PLAYER_HEAD
+    model: 0
+    display-name: "&aPrevious Page"
+    lore:
+      - "&7Go back to the previous page for other armor slots."
+    base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjEzNGJhMjQxZjg3M2Q1ZWY0YzUyNmViMjkxYjVjMTZkNTA3ZDVhMGM2ZjFhMmU2NTAzZWM1OWIzNjNhMzY3NSJ9fX0="
+
+  close-menu:
+    material: PLAYER_HEAD
+    model: 0
+    display-name: "&cClose Menu"
+    lore:
+      - "&7Click to close the menu."
+    base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWZkMjQwMDAwMmFkOWZiYmJkMDA2Njk0MWViNWIxYTM4NGFiOWIwZTQ4YTE3OGVlOTZlNGQxMjlhNTIwODY1NCJ9fX0="
+
+  item-filter:
+    material: GRAY_STAINED_GLASS_PANE
+    model: 0
+    display-name: " "
+    lore: []
+
 # Configuration for the metamorph command functionality in-game.
 Command:
   # The primary name for the metamorph command used in-game.

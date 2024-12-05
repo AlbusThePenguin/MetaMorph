@@ -1,0 +1,119 @@
+timberjack:
+  material: DIAMOND_AXE
+  permission: "mm.axes.timberjack"
+  model-id: 501
+  display-name: "&#4a4a4aTimberjack"
+  lore:
+    - '&#7c7c7cA sturdy axe designed for master lumberjacks.'
+    - '&#7c7c7cCapable of felling entire forests with precision.'
+  price: 900
+
+flame-harvester:
+  material: GOLDEN_AXE
+  permission: "mm.axes.flame_harvester"
+  model-id: 502
+  display-name: "&#ff4500Flame Harvester"
+  lore:
+    - '&#ff6347An axe imbued with fiery enchantments.'
+    - '&#ff6347Favored by those who conquer the infernal woods.'
+  price: 600
+
+crystal-cleaver:
+  material: NETHERITE_AXE
+  permission: "mm.axes.crystal_cleaver"
+  model-id: 503
+  display-name: "&#89cff0Crystal Cleaver"
+  lore:
+    - '&#d4f1f9Sharp and glistening with magical crystals.'
+    - '&#d4f1f9Unmatched in cutting through even the hardest woods.'
+  price: 1400
+
+ironbreaker:
+  material: IRON_AXE
+  permission: "mm.axes.ironbreaker"
+  model-id: 504
+  display-name: "&#e08effIronbreaker"
+  lore:
+    - '&#dda0ddA reliable axe with a reinforced head.'
+    - '&#dda0ddA favorite among miners and adventurers alike.'
+  price: 750
+
+farmers-helper:
+  material: STONE_AXE
+  permission: "mm.axes.farmers_helper"
+  model-id: 505
+  display-name: "&#4f4f4fFarmer’s Helper"
+  lore:
+    - '&#7c7c7cAn all-purpose axe trusted by generations of farmers.'
+    - '&#7c7c7cPerfect for clearing fields and chopping wood.'
+  price: 300
+
+obsidian-edge:
+  material: NETHERITE_AXE
+  permission: "mm.axes.obsidian_edge"
+  model-id: 506
+  display-name: "&#8b008bObsidian Edge"
+  lore:
+    - '&#c71585Forged from the hardest materials known to man.'
+    - '&#c71585Unbreakable and relentless in its power.'
+  price: 1600
+
+emerald-harvester:
+  material: DIAMOND_AXE
+  permission: "mm.axes.emerald_harvester"
+  model-id: 507
+  display-name: "&#50c878Emerald Harvester"
+  lore:
+    - '&#98fb98Infused with emerald energy for effortless chopping.'
+    - '&#98fb98A tool of choice for those with refined taste.'
+  price: 850
+
+shadow-axe:
+  material: DIAMOND_AXE
+  permission: "mm.axes.shadow_axe"
+  model-id: 508
+  display-name: "&#1a1a1aShadow Axe"
+  lore:
+    - '&#696969Shrouded in mystery, it cuts through the night.'
+    - '&#696969A weapon of choice for shadowy figures.'
+  price: 1100
+
+blazing-chopper:
+  material: GOLDEN_AXE
+  permission: "mm.axes.blazing_chopper"
+  model-id: 509
+  display-name: "&#ff4500Blazing Chopper"
+  lore:
+    - '&#ff6347Radiates heat strong enough to fell the toughest trees.'
+    - '&#ff6347A fiery companion for those in molten lands.'
+  price: 550
+
+frost-cleaver:
+  material: NETHERITE_AXE
+  permission: "mm.axes.frost_cleaver"
+  model-id: 510
+  display-name: "&#00ffffFrost Cleaver"
+  lore:
+    - '&#add8e6Cooled by icy winds to preserve its edge.'
+    - '&#add8e6Ideal for cutting through frost-covered landscapes.'
+  price: 1500
+
+celestial-axe:
+  material: NETHERITE_AXE
+  permission: "mm.axes.celestial_axe"
+  model-id: 511
+  display-name: "&#ffd700Celestial Axe"
+  lore:
+    - '&#e0e0e0Blessed by the heavens for unparalleled strength.'
+    - '&#e0e0e0A divine tool for legendary tasks.'
+  price: 2000
+
+verdant-cutter:
+  material: IRON_AXE
+  permission: "mm.axes.verdant_cutter"
+  model-id: 512
+  display-name: "&#32cd32Verdant Cutter"
+  lore:
+    - '&#90ee90Designed to preserve the natural harmony of forests.'
+    - '&#90ee90A trusted tool for sustainable harvesters.'
+  price: 800

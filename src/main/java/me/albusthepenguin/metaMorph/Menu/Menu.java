@@ -21,18 +21,21 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.NonNull;
+import me.albusthepenguin.metaMorph.Configs.ConfigType;
 import me.albusthepenguin.metaMorph.Message;
 import me.albusthepenguin.metaMorph.MetaMorph;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
@@ -40,6 +43,7 @@ import org.bukkit.profile.PlayerTextures;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Base64;
+import java.util.List;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
@@ -49,6 +53,8 @@ public abstract class Menu implements InventoryHolder {
     protected MetaMorph metaMorph;
 
     protected Message message;
+
+    protected ConfigurationSection guiSection;
 
     protected MenuUtilities menuUtilities;
 
@@ -76,10 +82,15 @@ public abstract class Menu implements InventoryHolder {
         this.key = new NamespacedKey(metaMorph, "clicked");
         this.menuUtilities = menuUtilities;
 
-        this.nextPage = new ItemStack(Material.ARROW);
-        this.prevPage = new ItemStack(Material.ARROW);
-        this.close = new ItemStack(Material.ACACIA_DOOR);
-        this.filter = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+        this.guiSection = this.getMetaMorph().getConfiguration().getConfig(ConfigType.Config).getConfigurationSection("GUI");
+        if(this.guiSection == null) {
+            throw new IllegalArgumentException("Please update your config.yml. Backup your old config.yml and delete it and restart the server.");
+        }
+
+        this.nextPage = this.build(this.guiSection.getConfigurationSection("next-page"));
+        this.prevPage = this.build(this.guiSection.getConfigurationSection("previous-page"));
+        this.close = this.build(this.guiSection.getConfigurationSection("close-menu"));
+        this.filter = this.build(this.guiSection.getConfigurationSection("item-filter"));
     }
 
     public abstract String getMenuName();
@@ -190,5 +201,65 @@ public abstract class Menu implements InventoryHolder {
 
         final JsonElement url = skin.getAsJsonObject().get("url");
         return url == null ? null : url.getAsString();
+    }
+
+    private ItemStack build(ConfigurationSection section) {
+        if (section == null) {
+            throw new IllegalArgumentException("Invalid GUI section in config.yml.");
+        }
+
+        String id = section.getName();
+        String materialName = section.getString("material");
+        if (materialName == null) {
+            throw new IllegalArgumentException("Missing 'material' for " + id + " in config.yml.");
+        }
+
+        Material material = Material.getMaterial(materialName.toUpperCase());
+        if (material == null) {
+            throw new IllegalArgumentException("'" + materialName + "' is not a valid material.");
+        }
+
+        // Handle PLAYER_HEAD with optional base64 texture
+        ItemStack itemStack;
+        if (material == Material.PLAYER_HEAD) {
+            String base64 = section.getString("base64");
+            if (base64 != null && !base64.isEmpty()) {
+                itemStack = getSkull(base64);
+            } else {
+                itemStack = new ItemStack(Material.PLAYER_HEAD); // Default PLAYER_HEAD if base64 is missing
+            }
+        } else {
+            itemStack = new ItemStack(material);
+        }
+
+        ItemMeta meta = itemStack.getItemMeta();
+        if (meta == null) {
+            throw new IllegalStateException("Failed to retrieve ItemMeta for material: " + material.name());
+        }
+
+        // Set custom model data if available
+        int modelData = section.getInt("model", -1); // Default to -1 for "not set"
+        if (modelData > 0) {
+            meta.setCustomModelData(modelData);
+        }
+
+        // Set display name
+        String displayName = section.getString("display-name");
+        if (displayName == null) {
+            this.metaMorph.getLogger().warning("The display-name for '" + id + "' is null.");
+        } else {
+            meta.setDisplayName(this.message.setColor(displayName));
+        }
+
+        // Set lore
+        List<String> lore = section.getStringList("lore").stream()
+                .map(this.message::setColor)
+                .toList();
+        if (!lore.isEmpty()) {
+            meta.setLore(lore);
+        }
+
+        itemStack.setItemMeta(meta);
+        return itemStack;
     }
 }

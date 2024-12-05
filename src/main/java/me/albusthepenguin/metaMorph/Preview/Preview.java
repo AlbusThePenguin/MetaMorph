@@ -78,7 +78,6 @@ public class Preview {
         final double maxHeight = 5.0;       // Maximum height the item reaches
         final double stepHeight = 0.1;     // Incremental height change per tick
         final long taskInterval = 2L;      // Interval in ticks between updates
-        final int spinSpeed = 5;           // Degrees to spin per tick
 
         new BukkitRunnable() {
             double currentHeight = 0.0;    // Tracks the current height
@@ -95,16 +94,11 @@ public class Preview {
                 Location updatedLocation = baseLocation.clone().add(0, currentHeight, 0);
                 itemDisplay.teleport(updatedLocation);
 
-                // Spin the ItemDisplay
-                float yaw = (itemDisplay.getLocation().getYaw() + spinSpeed) % 360;
-                updatedLocation.setYaw(yaw);
-                itemDisplay.teleport(updatedLocation);
-
-                // Spawn particle trail
                 World world = updatedLocation.getWorld();
                 if (world != null) {
-                    Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1.0F); // Cyan color
-                    world.spawnParticle(Particle.REDSTONE, updatedLocation, 1, 0, 0, 0, 0, dustOptions);
+                    Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1.0F); // Slightly reduced size for subtler effect
+                    Location particleLocation = updatedLocation.clone().subtract(0, 0.3, 0); // Move particles slightly below the item
+                    world.spawnParticle(Particle.REDSTONE, particleLocation, 5, 0.1, 0.1, 0.1, 0.01, dustOptions); // Reduced count and spread for a less overwhelming effect
                 }
 
                 currentHeight += stepHeight;

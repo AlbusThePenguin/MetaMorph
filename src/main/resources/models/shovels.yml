@@ -1,0 +1,119 @@
+earthshapers-spade:
+  material: DIAMOND_SHOVEL
+  permission: "mm.shovels.earthshapers_spade"
+  model-id: 401
+  display-name: "&#4a4a4aEarthshaper's Spade"
+  lore:
+    - '&#7c7c7cA mighty spade used to carve landscapes with ease.'
+    - '&#7c7c7cOnly the most skilled can wield its unparalleled force.'
+  price: 900
+
+golden-digger:
+  material: GOLDEN_SHOVEL
+  permission: "mm.shovels.golden_digger"
+  model-id: 402
+  display-name: "&#f9c909Golden Digger"
+  lore:
+    - '&#fff59eCrafted by ancient artisans for swift excavation.'
+    - '&#fff59eLight and quick, but wears easily under pressure.'
+  price: 400
+
+crystal-burrower:
+  material: NETHERITE_SHOVEL
+  permission: "mm.shovels.crystal_burrower"
+  model-id: 403
+  display-name: "&#89cff0Crystal Burrower"
+  lore:
+    - '&#d4f1f9Glistening with the power of enchanted crystals.'
+    - '&#d4f1f9Ideal for unearthing treasures buried in the earth.'
+  price: 1400
+
+durable-digger:
+  material: IRON_SHOVEL
+  permission: "mm.shovels.durable_digger"
+  model-id: 404
+  display-name: "&#e08effDurable Digger"
+  lore:
+    - '&#dda0ddForged with enduring strength for endless digging.'
+    - '&#dda0ddA companion for every miner and explorer.'
+  price: 700
+
+farmhands-friend:
+  material: STONE_SHOVEL
+  permission: "mm.shovels.farmhands_friend"
+  model-id: 405
+  display-name: "&#4f4f4fFarmhand's Friend"
+  lore:
+    - '&#7c7c7cReliable and sturdy, trusted by farmers for generations.'
+    - '&#7c7c7cA simple tool for humble beginnings.'
+  price: 250
+
+obsidian-shard:
+  material: NETHERITE_SHOVEL
+  permission: "mm.shovels.obsidian_shard"
+  model-id: 406
+  display-name: "&#8b008bObsidian Shard"
+  lore:
+    - '&#c71585Unbreakable and forged from the hardest materials.'
+    - '&#c71585Made for enduring the harshest of conditions.'
+  price: 1600
+
+emerald-excavator:
+  material: DIAMOND_SHOVEL
+  permission: "mm.shovels.emerald_excavator"
+  model-id: 407
+  display-name: "&#50c878Emerald Excavator"
+  lore:
+    - '&#98fb98Infused with the energy of emerald greenfields.'
+    - '&#98fb98An elegant tool for refined digging operations.'
+  price: 800
+
+shadow-scoop:
+  material: DIAMOND_SHOVEL
+  permission: "mm.shovels.shadow_scoop"
+  model-id: 408
+  display-name: "&#1a1a1aShadow Scoop"
+  lore:
+    - '&#696969Crafted to penetrate the deepest darkness of the earth.'
+    - '&#696969A tool shrouded in mystery and power.'
+  price: 1100
+
+blazing-spade:
+  material: GOLDEN_SHOVEL
+  permission: "mm.shovels.blazing_spade"
+  model-id: 409
+  display-name: "&#ff4500Blazing Spade"
+  lore:
+    - '&#ff6347Infused with fiery magic to break through tough soil.'
+    - '&#ff6347Favored by those who tread molten grounds.'
+  price: 550
+
+frost-digger:
+  material: NETHERITE_SHOVEL
+  permission: "mm.shovels.frost_digger"
+  model-id: 410
+  display-name: "&#00ffffFrost Digger"
+  lore:
+    - '&#add8e6Cooled by the icy winds of the tundra.'
+    - '&#add8e6Perfect for clearing snow and frozen terrain.'
+  price: 1500
+
+celestial-scooper:
+  material: NETHERITE_SHOVEL
+  permission: "mm.shovels.celestial_scooper"
+  model-id: 411
+  display-name: "&#ffd700Celestial Scooper"
+  lore:
+    - '&#e0e0e0Touched by the stars for effortless excavation.'
+    - '&#e0e0e0A divine tool for celestial tasks.'
+  price: 2000
+
+verdant-shovel:
+  material: IRON_SHOVEL
+  permission: "mm.shovels.verdant_shovel"
+  model-id: 412
+  display-name: "&#32cd32Verdant Shovel"
+  lore:
+    - '&#90ee90Nurtures the earth with every stroke.'
+    - '&#90ee90Favored by those who live in harmony with nature.'
+  price: 750

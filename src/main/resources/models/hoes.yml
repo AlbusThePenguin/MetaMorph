@@ -1,0 +1,119 @@
+goliaths-plow:
+  material: DIAMOND_HOE
+  permission: "mm.hoes.goliaths_plow"
+  model-id: 301
+  display-name: "&#4a4a4aGoliath's Plow"
+  lore:
+    - '&#7c7c7cA massive plow used to cultivate the land of giants.'
+    - '&#7c7c7cOnly the strongest can harness its raw power.'
+  price: 850
+
+golden-harvester:
+  material: GOLDEN_HOE
+  permission: "mm.hoes.golden_harvester"
+  model-id: 302
+  display-name: "&#f9c909Golden Harvester"
+  lore:
+    - '&#fff59eBlessed by the gods of abundance and prosperity.'
+    - '&#fff59eSwift and fragile, perfect for light farming.'
+  price: 500
+
+crystal-cultivator:
+  material: NETHERITE_HOE
+  permission: "mm.hoes.crystal_cultivator"
+  model-id: 303
+  display-name: "&#89cff0Crystal Cultivator"
+  lore:
+    - '&#d4f1f9Infused with shimmering crystals of unmatched beauty.'
+    - '&#d4f1f9Ideal for enriching even the harshest soils.'
+  price: 1400
+
+enchanted-tiller:
+  material: IRON_HOE
+  permission: "mm.hoes.enchanted_tiller"
+  model-id: 304
+  display-name: "&#e08effEnchanted Tiller"
+  lore:
+    - '&#dda0ddCultivate with the power of ancient magic.'
+    - '&#dda0ddThe secrets of the soil reveal themselves with each use.'
+  price: 950
+
+farmers-song:
+  material: STONE_HOE
+  permission: "mm.hoes.farmers_song"
+  model-id: 305
+  display-name: "&#4f4f4fFarmer's Song"
+  lore:
+    - '&#7c7c7cA timeless melody echoes with each swing.'
+    - '&#7c7c7cA humble yet steadfast companion for any farmer.'
+  price: 300
+
+obsidian-cultivator:
+  material: NETHERITE_HOE
+  permission: "mm.hoes.obsidian_cultivator"
+  model-id: 306
+  display-name: "&#8b008bObsidian Cultivator"
+  lore:
+    - '&#c71585Harness unbreakable strength to enrich the land.'
+    - '&#c71585Built to last through the most grueling tasks.'
+  price: 1600
+
+emerald-sower:
+  material: DIAMOND_HOE
+  permission: "mm.hoes.emerald_sower"
+  model-id: 307
+  display-name: "&#50c878Emerald Sower"
+  lore:
+    - '&#98fb98Imbued with the essence of emeralds from lush fields.'
+    - '&#98fb98Each use nurtures the land with verdant energy.'
+  price: 700
+
+shadow-scythe:
+  material: DIAMOND_HOE
+  permission: "mm.hoes.shadow_scythe"
+  model-id: 308
+  display-name: "&#1a1a1aShadow Scythe"
+  lore:
+    - '&#696969Carve through the darkness to cultivate unseen growth.'
+    - '&#696969A tool of the void, feared and revered.'
+  price: 1200
+
+blazing-harrow:
+  material: GOLDEN_HOE
+  permission: "mm.hoes.blazing_harrow"
+  model-id: 309
+  display-name: "&#ff4500Blazing Harrow"
+  lore:
+    - '&#ff6347Engulfed in eternal flames, searing the soil as it moves.'
+    - '&#ff6347Favored by those who seek fiery fields of prosperity.'
+  price: 600
+
+frost-plow:
+  material: NETHERITE_HOE
+  permission: "mm.hoes.frost_plow"
+  model-id: 310
+  display-name: "&#00ffffFrost Plow"
+  lore:
+    - '&#add8e6Chilled by the frozen winds of the tundra.'
+    - '&#add8e6A relic of frost giants, perfect for icy terrains.'
+  price: 1500
+
+celestial-reaper:
+  material: NETHERITE_HOE
+  permission: "mm.hoes.celestial_reaper"
+  model-id: 311
+  display-name: "&#ffd700Celestial Reaper"
+  lore:
+    - '&#e0e0e0Blessed under starlight to gather crops of the heavens.'
+    - '&#e0e0e0Each swing is a graceful celestial dance.'
+  price: 2000
+
+verdant-tender:
+  material: IRON_HOE
+  permission: "mm.hoes.verdant_tender"
+  model-id: 312
+  display-name: "&#32cd32Verdant Tender"
+  lore:
+    - '&#90ee90Carefully nurtures the land for bountiful growth.'
+    - '&#90ee90A treasured tool for guardians of nature.'
+  price: 850
