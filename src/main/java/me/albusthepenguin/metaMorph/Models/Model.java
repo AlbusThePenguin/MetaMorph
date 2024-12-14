@@ -28,6 +28,10 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import java.util.List;
 
+/**
+ * Model class is configured to be the
+ * configured model in /plugins/metamorph/models...
+ */
 @Getter
 public class Model {
 

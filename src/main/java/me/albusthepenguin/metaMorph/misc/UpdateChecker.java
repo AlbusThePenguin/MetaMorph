@@ -9,6 +9,9 @@ import java.net.URL;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
+/**
+ * Class to handle checking the plugin version relative to the latest on spigotmc.org/.
+ */
 public class UpdateChecker {
 
     private final JavaPlugin plugin;
