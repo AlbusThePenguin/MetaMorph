@@ -16,7 +16,7 @@
  */
 package me.albusthepenguin.metaMorph.Preview;
 
-import me.albusthepenguin.metaMorph.Message;
+import me.albusthepenguin.metaMorph.misc.Message;
 import me.albusthepenguin.metaMorph.MetaMorph;
 import me.albusthepenguin.metaMorph.Models.Model;
 import org.bukkit.*;

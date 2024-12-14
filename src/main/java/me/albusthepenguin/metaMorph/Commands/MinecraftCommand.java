@@ -17,7 +17,7 @@
 package me.albusthepenguin.metaMorph.Commands;
 
 import lombok.Getter;
-import me.albusthepenguin.metaMorph.Message;
+import me.albusthepenguin.metaMorph.misc.Message;
 import me.albusthepenguin.metaMorph.MetaMorph;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;

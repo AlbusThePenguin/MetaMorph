@@ -133,7 +133,7 @@ public class ModelMenu extends Menu {
 
             ClickType clickType = event.getClick();
 
-            if (clickType == ClickType.MIDDLE) {
+            if (clickType == ClickType.SHIFT_LEFT) {
                 if (this.modelHandler.getMetaMorph().getPreview().spawn(player, model)) {
                     player.getOpenInventory().close();
                     super.playYes(player);

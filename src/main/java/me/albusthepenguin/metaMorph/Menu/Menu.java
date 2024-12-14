@@ -22,7 +22,7 @@ import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.NonNull;
 import me.albusthepenguin.metaMorph.Configs.ConfigType;
-import me.albusthepenguin.metaMorph.Message;
+import me.albusthepenguin.metaMorph.misc.Message;
 import me.albusthepenguin.metaMorph.MetaMorph;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

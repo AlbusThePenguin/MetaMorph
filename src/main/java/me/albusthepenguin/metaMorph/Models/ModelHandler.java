@@ -52,7 +52,6 @@ public class ModelHandler {
 
     private void loadModels() {
         File modelsDirectory = new File(metaMorph.getDataFolder(), "models");
-        this.metaMorph.getLogger().info("The directory is " + modelsDirectory.getAbsolutePath());
 
         if (!modelsDirectory.exists()) {
             boolean created = modelsDirectory.mkdirs();

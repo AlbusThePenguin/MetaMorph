@@ -5,14 +5,14 @@ lore-settings:
     - ''
     - '&7Price for {item-display} &7is &e{price}'
     - '&7Click to purchase {item-display}'
-    - '&7Middle Mouse Click to preview'
+    - '&7Shift-Left-Click to preview'
     - ''
   owned:
     - ''
     - '&aYou already own {item-display}'
     - ''
     - '&7Click to equip your item with {item-display}'
-    - '&7Middle Mouse Click to preview'
+    - '&7Shift-Left-Click to preview'
     - ''
 
 GUI:
@@ -67,3 +67,6 @@ Command:
   aliases:
     - 'mm'   # Allow players to use /mm as a shortcut for /metamorph.
     - 'mmo'    # Allow players to use /mmo as a shortcut for /metamorph.
+
+#Enable update checker, to get notified if you're using an outdated version? (true - false)
+update-checker: true

@@ -25,6 +25,8 @@ import me.albusthepenguin.metaMorph.Hooks.VaultHook;
 import me.albusthepenguin.metaMorph.Menu.MenuListener;
 import me.albusthepenguin.metaMorph.Models.ModelHandler;
 import me.albusthepenguin.metaMorph.Preview.Preview;
+import me.albusthepenguin.metaMorph.misc.Message;
+import me.albusthepenguin.metaMorph.misc.UpdateChecker;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
@@ -86,6 +88,15 @@ public final class MetaMorph extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new MenuListener(), this);
 
         new Metrics(this, 19112);
+
+        if(this.configuration.getConfig(ConfigType.Config).getBoolean("update-checker", true)) {
+            new UpdateChecker(this, 109270).getVersion(version -> {
+                String yourVersion = this.getDescription().getVersion();
+                if(!yourVersion.equals(version)) {
+                    this.getLogger().info("There is a new version available. You are using version: " + yourVersion + " and the latest version is " + version);
+                }
+            });
+        }
     }
 
     /*
