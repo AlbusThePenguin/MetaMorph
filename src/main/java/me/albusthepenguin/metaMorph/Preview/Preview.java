@@ -43,13 +43,11 @@ public class Preview {
      * 4 blocks in the direction they are facing.
      */
     public boolean spawn(Player player, Model model) {
-        // Permission check
-        if (!player.hasPermission("mm.preview") && !model.getPermission().equalsIgnoreCase("none")) {
+        if(!player.hasPermission("mm.preview")) {
             player.sendMessage(this.message.get("no-permission", null, true));
             return false;
         }
 
-        // Determine spawn location 4 blocks from player's feet in the direction they are looking
         Location feetLocation = player.getLocation(); // Player's feet location
         Vector direction = feetLocation.getDirection().normalize();
         Location spawnLocation = feetLocation.add(direction.multiply(4));

@@ -99,11 +99,8 @@ public final class MetaMorph extends JavaPlugin {
         }
     }
 
-    /*
-    * This may give us some issues. let's see later.
-    * */
     public void onReload() {
-        this.modelHandler.reloadAll();
+        this.modelHandler.reloadAll(); //Later problem <--
     }
 
     private void buildInGameCommand() {
@@ -128,10 +125,12 @@ public final class MetaMorph extends JavaPlugin {
             throw new IllegalArgumentException("The 'usage' field is missing or empty in the Commands section of config.yml.");
         }
 
+        String permission = section.getString("permission", "mm.use");
+
         List<String> aliases = section.getStringList("aliases");
 
         new CommandManager(
-                this, commandLabel, "mm.admin", description, usageMessage, aliases
+                this, commandLabel, permission, description, usageMessage, aliases
         );
     }
 }

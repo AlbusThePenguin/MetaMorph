@@ -49,6 +49,7 @@ GUI:
     lore: []
 
 # Configuration for the metamorph command functionality in-game.
+# Will add options for sub commands shortly. but at the moment they're a bit restricted.
 Command:
   # The primary name for the metamorph command used in-game.
   # Example: Setting this to 'metamorph' means players will use /metamorph in-game.
@@ -67,6 +68,8 @@ Command:
   aliases:
     - 'mm'   # Allow players to use /mm as a shortcut for /metamorph.
     - 'mmo'    # Allow players to use /mmo as a shortcut for /metamorph.
+
+  permission: 'mm.use' #This permission simply gives you the permission to use the /metamorph command.
 
 #Enable update checker, to get notified if you're using an outdated version? (true - false)
 update-checker: true

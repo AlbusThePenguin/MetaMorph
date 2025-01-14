@@ -45,7 +45,7 @@ public class CommandManager extends MinecraftCommand {
 
         Optional.ofNullable(metaMorph.getLuckPermsHook())
                 .ifPresentOrElse(
-                        hook -> this.subcommands.add(new giveModelCommand(metaMorph, "give", "mm.give", "metamorph give <player> <model>")),
+                        hook -> this.subcommands.add(new giveModelCommand(metaMorph, "give", "mm.admin", "metamorph give <player> <model>")),
                         () -> metaMorph.getLogger().info("LuckPerms support was not found disabling the command /metamorph give <player> <model>")
                 );
 

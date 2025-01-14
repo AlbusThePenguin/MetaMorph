@@ -79,6 +79,7 @@ public abstract class MinecraftCommand extends BukkitCommand implements TabExecu
             sender.sendMessage("You do not have permission to use this command.");
             return false;
         }
+
     }
 
     /**

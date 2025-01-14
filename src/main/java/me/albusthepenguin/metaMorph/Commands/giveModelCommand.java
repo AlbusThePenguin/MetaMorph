@@ -34,6 +34,11 @@ public class giveModelCommand extends MinecraftSubCommand {
 
     @Override
     public void perform(Player player, String[] args) {
+        if(!player.hasPermission(super.getPermission())) {
+            player.sendMessage(super.getMessage().get("no-permission", null, true));
+            return;
+        }
+
         if(super.getMetaMorph().getLuckPermsHook() == null) {
             player.sendMessage(super.getMessage().get("ops-issue", null, true));
             return;

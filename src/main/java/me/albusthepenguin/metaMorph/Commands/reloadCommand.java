@@ -17,6 +17,11 @@ public class reloadCommand extends MinecraftSubCommand {
 
     @Override
     public void perform(Player player, String[] args) {
+        if(!player.hasPermission(super.getPermission())) {
+            player.sendMessage(super.getMessage().get("no-permission", null, true));
+            return;
+        }
+
         if(args.length != 1) {
             player.sendMessage(super.getMessage().get("wrong-syntax", Map.of("{syntax}", super.getSyntax()), true));
             return;
