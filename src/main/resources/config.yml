@@ -48,6 +48,16 @@ GUI:
     display-name: " "
     lore: []
 
+Preview:
+  display-name: "&ePreview: {model}"
+  size: 1.0 #The size of the entity.
+
+  #Animation related
+  max-height: 5.0 #The maximum amount of height the animation goes.
+  height-increments: 0.1 #The increments of height for each 'intervals'
+  rotation-speed: 10.0 #The speed of the animation rotating
+  intervals: 2 #How frequent the interval between each animation last in 'ticks'.
+
 # Configuration for the metamorph command functionality in-game.
 # Will add options for sub commands shortly. but at the moment they're a bit restricted.
 Command:

@@ -16,14 +16,16 @@
  */
 package me.albusthepenguin.metaMorph.Preview;
 
+import me.albusthepenguin.metaMorph.Configs.ConfigType;
 import me.albusthepenguin.metaMorph.misc.Message;
 import me.albusthepenguin.metaMorph.MetaMorph;
 import me.albusthepenguin.metaMorph.Models.Model;
 import org.bukkit.*;
-import org.bukkit.entity.Display;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 
 public class Preview {
@@ -48,6 +50,9 @@ public class Preview {
             return false;
         }
 
+        ConfigurationSection section = this.metaMorph.getConfiguration().getConfig(ConfigType.Config).getConfigurationSection("Preview");
+        assert section != null;
+
         Location feetLocation = player.getLocation(); // Player's feet location
         Vector direction = feetLocation.getDirection().normalize();
         Location spawnLocation = feetLocation.add(direction.multiply(4));
@@ -59,48 +64,71 @@ public class Preview {
 
         // Spawn the ItemDisplay
         ItemDisplay itemDisplay = world.spawn(spawnLocation, ItemDisplay.class);
+
+        Transformation transformation = itemDisplay.getTransformation();
+
+        float size = (float) section.getDouble("size", 1.0);
+        transformation.getScale().set(size);
+
         itemDisplay.setItemStack(model.getItemStack());
-        itemDisplay.setBillboard(Display.Billboard.CENTER);
-        itemDisplay.setCustomName(this.message.setColor("&ePreview: " + model.getDisplayName()));
+
+        String displayName = section.getString("display-name", "&ePreview: " + model.getDisplayName());
+        if(displayName.contains("{model}")) {
+            displayName = displayName.replace("{model}", model.getDisplayName());
+        }
+        itemDisplay.setCustomName(this.message.setColor(displayName));
+
         itemDisplay.setCustomNameVisible(true);
 
+        itemDisplay.setTransformation(transformation);
+
         // Animate the spawned ItemDisplay
-        animate(itemDisplay, spawnLocation);
+        double maxHeight = section.getDouble("max-height", 5.0);
+        double heightIncrements = section.getDouble("height-increments", 0.1);
+        double rotationSpeed = section.getDouble("rotation-speed", 10.0);
+        long intervals = section.getLong("intervals", 2L);
+
+        animate(player, itemDisplay, spawnLocation, maxHeight, heightIncrements, rotationSpeed, intervals);
         return true;
     }
 
     /**
      * Animates the ItemDisplay by moving it upward, spinning it, and adding a cyan particle trail.
      */
-    private void animate(ItemDisplay itemDisplay, Location baseLocation) {
-        final double maxHeight = 5.0;       // Maximum height the item reaches
-        final double stepHeight = 0.1;     // Incremental height change per tick
-        final long taskInterval = 2L;      // Interval in ticks between updates
-
+    private void animate(Player player, ItemDisplay itemDisplay, Location baseLocation,
+                         double maxHeight, double heightIncrements, double rotationSpeed, long intervals) {
         new BukkitRunnable() {
             double currentHeight = 0.0;    // Tracks the current height
+            float currentYaw = 0.0f;       // Tracks the current yaw rotation
 
             @Override
             public void run() {
                 if (currentHeight >= maxHeight) {
                     Bukkit.getScheduler().runTaskLater(metaMorph, itemDisplay::remove, 20L);
+                    player.playSound(baseLocation, Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
                     cancel();
                     return;
                 }
 
-                // Update ItemDisplay location
+                // Update ItemDisplay location and rotation (spin effect)
                 Location updatedLocation = baseLocation.clone().add(0, currentHeight, 0);
+                updatedLocation.setYaw(currentYaw); // Apply spinning effect
                 itemDisplay.teleport(updatedLocation);
 
+                // Update yaw for next tick
+                currentYaw += (float) rotationSpeed;
+                if (currentYaw >= 360.0f) currentYaw -= 360.0f; // Keep yaw within bounds
+
+                // Spawn particle trail
                 World world = updatedLocation.getWorld();
                 if (world != null) {
-                    Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1.0F); // Slightly reduced size for subtler effect
-                    Location particleLocation = updatedLocation.clone().subtract(0, 0.3, 0); // Move particles slightly below the item
-                    world.spawnParticle(Particle.REDSTONE, particleLocation, 5, 0.1, 0.1, 0.1, 0.01, dustOptions); // Reduced count and spread for a less overwhelming effect
+                    Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1.0F);
+                    Location particleLocation = updatedLocation.clone().subtract(0, 0.3, 0);
+                    world.spawnParticle(Particle.REDSTONE, particleLocation, 5, 0.1, 0.1, 0.1, 0.01, dustOptions);
                 }
 
-                currentHeight += stepHeight;
+                currentHeight += heightIncrements;
             }
-        }.runTaskTimer(metaMorph, 0L, taskInterval);
+        }.runTaskTimer(metaMorph, 0L, intervals);
     }
 }
